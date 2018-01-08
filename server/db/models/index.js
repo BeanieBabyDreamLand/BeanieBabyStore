@@ -1,5 +1,8 @@
 const User = require('./user')
 const Baby = require('./baby')
+const LineItem = require('./lineItem')
+const Order = require('./order')
+
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -15,7 +18,9 @@ const Baby = require('./baby')
  */
 module.exports = {
   User,
-  Baby
+  Baby,
+  LineItem,
+  Order
 }
 
 // completed column in orders
