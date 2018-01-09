@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Order.findAll({
-      include: [{model:User, as:'user'}]
+      include: [{model: User, as: 'user'}]
   })
     .then(orders => res.json(orders))
     .catch(next)
@@ -15,26 +15,32 @@ router.get('/:orderId', (req, res, next) => {
   const orderId = req.params.orderId
   Order.findAll( {
       where: { id: orderId }, 
-      include: [{ model: User, as:'User'},
-                {model:LineItem, as:'lineitem'}]
+      include: [{ model: User, as: 'User'},
+                {model: LineItem, as: 'lineitem'}]
     } )
     .then(orders => res.json(orders))
     .catch(next)
 })
 //stopped here 1/8/18
-//just for admins
+//for anytime you want to start or add to a cart (which is just an order)
+/*
+info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
+
+*/
 router.post('/', (req, res, next) => {
   Order.findOrCreate({
-    where: { name: req.body.name }
+    where: { user_id: req.body.userId, 
+            complete: false}
   })
     .then(arr => {
-      if (arr[1]) {
-        res.send(arr[0])
+      if (arr[1]) { //true , means it was just created
+        //now post a new order
+        const newOrder = arr[0]
+        //newOrder.setUser(req.body.userId)//is this redundant?
+        res.send(newOrder)
       }
-      else {
-        let err = new Error('')
-        err.status = 409
-        next(err)
+      else { //false, already exists
+        res.send(arr[0])
       }
     })
     .catch(next)
