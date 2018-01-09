@@ -4,7 +4,7 @@ module.exports = router
 
 router.get('/', (req, res, next) => {
   Order.findAll({
-      include: [{model: User, as: 'user'}]
+      include: [{model: User}]
   })
     .then(orders => res.json(orders))
     .catch(next)
@@ -15,13 +15,12 @@ router.get('/:orderId', (req, res, next) => {
   const orderId = req.params.orderId
   Order.findAll( {
       where: { id: orderId }, 
-      include: [{ model: User, as: 'User'},
-                {model: LineItem, as: 'lineitem'}]
+      include: [{ model: User},
+                {model: LineItem}]
     } )
     .then(orders => res.json(orders))
     .catch(next)
 })
-//stopped here 1/8/18
 //for anytime you want to start or add to a cart (which is just an order)
 /*
 info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
@@ -29,7 +28,8 @@ info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
 */
 router.post('/', (req, res, next) => {
   Order.findOrCreate({
-    where: { user_id: req.body.userId, 
+    where: { userId: req.body.userId,
+            total: 0, 
             complete: false}
   })
     .then(arr => {
@@ -56,8 +56,8 @@ router.put('/:orderId', (req, res, next) => {
       returing: true,
       plain: true
     })
-    .then(arr => {
-      res.send(arr[1])
+    .then(() => {
+      res.status(201).send('Updated!')
     })
     .catch(next)
 })
@@ -67,5 +67,8 @@ router.delete('/:orderId', (req, res, next) => {
   Order.destroy({
     where: { id: orderId }
   })
-    .catch(next)
+  .then(() => {
+    res.status(204).send('User deleted')
+  })
+  .catch(next)
 })

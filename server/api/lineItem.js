@@ -12,16 +12,15 @@ router.get('/', (req, res, next) => {
 
 router.get('/:lineItemId', (req, res, next) => {
   const lineItemId = req.params.lineItemId
-  LineItem.findById((lineItemId) => {
-  })
+  LineItem.findById(lineItemId)
     .then(lineItems => res.json(lineItems))
     .catch(next)
 })
 
-router.get('/:orderId', (req, res, next) => {
+router.get('/orders/:orderId', (req, res, next) => {
     const orderId = req.params.orderId
     LineItem.findAll({
-      where: {order_id: orderId}
+      where: {orderId: orderId}
     })
       .then(lineItems => res.json(lineItems))
       .catch(next)
@@ -29,7 +28,13 @@ router.get('/:orderId', (req, res, next) => {
   
 
 router.post('/', (req, res, next) => {
-  LineItem.create(req.body)
+  LineItem.create({
+    price: req.body.price,
+    quantity: req.body.quantity,
+    userId: req.body.userId,
+    babyId: req.body.babyId,
+    orderId: req.body.orderId
+  })
     .then(createdLI => {
       res.send(createdLI)
     })
@@ -45,9 +50,9 @@ router.put('/:lineItemId', (req, res, next) => {
         { id: lineItemId },
       returing: true,
       plain: true
-    })
-    .then(arr => {
-      res.send(arr[1])
+    })    
+    .then(() => {
+      res.status(201).send('Updated!')
     })
     .catch(next)
 })
@@ -57,5 +62,8 @@ router.delete('/:lineItemId', (req, res, next) => {
   LineItem.destroy({
     where: { id: lineItemId }
   })
-    .catch(next)
+  .then(() => {
+    res.status(204).send('User deleted')
+  })
+  .catch(next)
 })
