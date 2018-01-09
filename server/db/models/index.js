@@ -3,6 +3,7 @@ const Baby = require('./baby')
 const LineItem = require('./lineItem')
 const Order = require('./order')
 const Review = require('./review')
+const db = require('../db')
 
 /**
  * If we had any associations to make, this would be a great place to put them!
