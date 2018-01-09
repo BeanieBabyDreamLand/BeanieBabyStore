@@ -33,4 +33,5 @@ const Baby = db.define('baby', {
   }
 })
 
+module.exports = Baby
 // address out of stock inventory

@@ -1,3 +1,3 @@
 # Beanie Babies: Dream Land
 
-Welcome to the idealic world of Beanie Babies.
+Welcome to the idyllic world of Beanie Babies.
