@@ -15,7 +15,7 @@ router.get('/:babyId', (req, res, next) => {
   const babyId = req.params.babyId
   Baby.findAll( {
       where: { id: babyId }, 
-      include: [{ model: Review, as:'Review'}]
+      include: [{ model: Review}]
     } )
     .then(babies => res.json(babies))
     .catch(next)
@@ -24,7 +24,13 @@ router.get('/:babyId', (req, res, next) => {
 //just for admins
 router.post('/', (req, res, next) => {
   Baby.findOrCreate({
-    where: { name: req.body.name }
+    where: { name: req.body.name,
+            poem: req.body.poem,
+            price: req.body.price,
+            inventory_qty: req.body.inventory_qty,
+            imageUrl: req.body.imageUrl,
+            category: req.body.category
+    }
   })
     .then(arr => {
       if (arr[1]) {
@@ -49,8 +55,8 @@ router.put('/:babyId', (req, res, next) => {
       returing: true,
       plain: true
     })
-    .then(arr => {
-      res.send(arr[1])
+    .then(() => {
+      res.status(201).send('Updated!')
     })
     .catch(next)
 })
@@ -60,5 +66,8 @@ router.delete('/:babyId', (req, res, next) => {
   Baby.destroy({
     where: { id: babyId }
   })
-    .catch(next)
+  .then(() => {
+    res.status(204).send('User deleted')
+  })
+  .catch(next)
 })

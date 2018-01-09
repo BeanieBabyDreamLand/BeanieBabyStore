@@ -12,7 +12,8 @@ router.get('/', (req, res, next) => {
 
 router.get('/:userId', (req, res, next) => {
   const userId = req.params.userId
-  User.findById((userId) => {
+  User.findOne({
+    where: {id: userId},
     attributes: ['id', 'email', 'firstname', 'lastname', 'fullname']
   })
     .then(users => res.json(users))
@@ -24,7 +25,8 @@ router.post('/', (req, res, next) => {
   User.findOrCreate({
     where: { email: req.body.email, 
             firstname: req.body.firstname, 
-            lastname: req.body.lastname }
+            lastname: req.body.lastname,
+            password: req.body.password }
   })
     .then(arr => {
       if (arr[1]) {
@@ -49,8 +51,8 @@ router.put('/:userId', (req, res, next) => {
       returing: true,
       plain: true
     })
-    .then(arr => {
-      res.send(arr[1])
+    .then(() => {
+      res.status(201).send('Updated!')
     })
     .catch(next)
 })
@@ -60,5 +62,8 @@ router.delete('/:userId', (req, res, next) => {
   User.destroy({
     where: { id: userId }
   })
-    .catch(next)
+  .then(() => {
+    res.status(204).send('User deleted')
+  })
+  .catch(next)
 })
