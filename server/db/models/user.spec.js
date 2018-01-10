@@ -10,23 +10,6 @@ describe('User model', () => {
     return db.sync({force: true})
   })
 
-<<<<<<< HEAD
-  describe('instanceMethods', () => {
-    describe('correctPassword', () => {
-      let cody
-
-      beforeEach(() => {
-        return User.create({
-          email: 'cody@puppybook.com',
-          firstname: 'cody',
-          lastname: 'dog',
-          password: 'bones'
-        })
-          .then(user => {
-            cody = user
-          })
-      })
-=======
   /* create an un-saved user instance before every spec */
   var user;
   beforeEach(() => {
@@ -37,7 +20,6 @@ describe('User model', () => {
       lastname: 'ing'
     })
   })
->>>>>>> ee2faeb992104b7246f0f891e99d85bbe4a82895
 
   /* empty the tables after each spec */
   afterEach(() => {
