@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
+import Home from './home'
 
 /**
  * COMPONENT
@@ -15,7 +16,7 @@ const Main = (props) => {
 
   return (
     <div>
-      <nav className = "navbar navbar-expand-md fixed-top">
+      <nav className = "navbar navbar-expand-md fixed-top navbar-light">
       <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
         {
           isLoggedIn
@@ -31,8 +32,8 @@ const Main = (props) => {
             </div>
         }
       </nav>
-      <hr />
-      {children}
+      {children} {/* this is where the email and password login form is currently located*/}
+      <Home />
     </div>
   )
 }
