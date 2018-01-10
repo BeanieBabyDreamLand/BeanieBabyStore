@@ -114,7 +114,6 @@ describe('Baby routes', () => {
                 .expect(201)
                 .expect('Content-Type', /json/)
                 .expect(function (res) {
-                    console.log('**', res)
                     expect(res.body.category).to.equal('rare');
                     expect(res.body.inventory_qty).to.equal(500)
                 })
