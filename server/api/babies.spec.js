@@ -33,7 +33,15 @@ describe('Baby routes', () => {
                     inventory_qty: '20',
                     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/71E25QZTEVL.gif',
                     category: 'common'
-                })
+            }),
+                Baby.create({
+                    name: 'Mystic',
+                    poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
+                    price: '5000.00',
+                    inventory_qty: '1',
+                    imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
+                    category: 'rare'
+            })
         })
 
         it('GET /api/babies', () => {
@@ -80,7 +88,7 @@ describe('Baby routes', () => {
                     name: 'Mystic',
                     poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
                     price: '5000.00',
-                    inventory_qty: '1',
+                    inventory_qty: '500',
                     imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
                     category: 'rare'
                 })
@@ -91,7 +99,7 @@ describe('Baby routes', () => {
                         name: 'Mystic',
                         poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
                         price: '5000.00',
-                        inventory_qty: '1',
+                        inventory_qty: '500',
                         imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
                         category: 'rare'
                     });
