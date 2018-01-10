@@ -1,9 +1,14 @@
 const router = require('express').Router()
-const { Review } = require('../db/models')
+const { Review, User, Baby } = require('../db/models')
 module.exports = router
 
 router.param('reviewId', (req, res, next, reviewId) => {
-  Review.findById(req.params.reviewId)
+  Review.findOne({
+    where: {id: req.params.reviewId},
+    include: [{model: User,
+              attributes: ['firstname', 'lastname', 'fullname']},
+            {model: Baby}]
+  })
     .then(foundReview => {
       if (foundReview) {
         req.review = foundReview

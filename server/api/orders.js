@@ -2,9 +2,24 @@ const router = require('express').Router()
 const {Order, User, LineItem} = require('../db/models')
 module.exports = router
 
+router.param('orderId', (req, res, next, orderId) => {
+  Order.findOne( {
+      where: { id: orderId }, 
+      include: [{ model: User,
+                  attributes: ['firstname', 'lastname', 'fullname']},
+                {model: LineItem}]
+    } )
+    .then(order => {
+      req.order = order
+      next()
+    })
+})
+
 router.get('/', (req, res, next) => {
   Order.findAll({
-      include: [{model: User}]
+      include: [{model: User,
+                  attributes: ['firstname', 'lastname', 'fullname']},
+                {model: LineItem}]
   })
     .then(orders => res.json(orders))
     .catch(next)
@@ -12,19 +27,12 @@ router.get('/', (req, res, next) => {
 
 
 router.get('/:orderId', (req, res, next) => {
-  const orderId = req.params.orderId
-  Order.findAll( {
-      where: { id: orderId }, 
-      include: [{ model: User},
-                {model: LineItem}]
-    } )
-    .then(orders => res.json(orders))
-    .catch(next)
+  res.send(req.order)
 })
+
 //for anytime you want to start or add to a cart (which is just an order)
 /*
 info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
-
 */
 router.post('/', (req, res, next) => {
   Order.findOrCreate({
@@ -47,28 +55,26 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:orderId', (req, res, next) => {
-  const orderId = req.params.orderId
   Order.update(
     req.body,
     {
       where:
-        { id: orderId },
-      returing: true,
+        { id: req.order.id },
+      returning: true,
       plain: true
     })
-    .then(() => {
-      res.status(201).send('Updated!')
+    .then((arr) => {
+      res.status(201).send(arr[1])
     })
     .catch(next)
 })
 
 router.delete('/:orderId', (req, res, next) => {
-  const orderId = req.params.orderId
   Order.destroy({
-    where: { id: orderId }
+    where: { id: req.order.id }
   })
   .then(() => {
-    res.status(204).send('User deleted')
+    res.status(204).send('Order deleted')
   })
   .catch(next)
 })
