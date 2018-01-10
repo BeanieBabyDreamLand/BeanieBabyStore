@@ -16,10 +16,10 @@ describe('User routes', () => {
 
     beforeEach(() => {
       return User.create({
-        email: 'codysEmail@dog.com',
+        email: codysEmail,
         firstname: 'cody',
         lastname: 'dog',
-        password: 'pug'
+        password: 'asdfg'
       })
     })
 
@@ -31,6 +31,22 @@ describe('User routes', () => {
           expect(res.body).to.be.an('array')
           expect(res.body[0].email).to.be.equal(codysEmail)
         })
+    })
+    it('GET /api/users/:id', () =>{
+      return request(app)
+      .get('/api/users/1')
+      // .send({
+      //   id: 1,
+      //   email: codysEmail,
+      //   firstname: 'cody',
+      //   lastname: 'dog',
+      //   fullname: 'cody dog'
+      // })
+      .expect(200)
+      .then(res => {
+        expect(res.body).to.be.an('object')
+        expect(res.body.id).to.be.equal(1)
+      })
     })
   }) // end describe('/api/users')
 }) // end describe('User routes')
