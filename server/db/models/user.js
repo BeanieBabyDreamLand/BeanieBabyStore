@@ -26,6 +26,17 @@ const User = db.define('user', {
     get() {
       return this.firstname + ' ' + this.lastname
     }
+  },
+  isAdmin: {
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
+  },
+  googleId: {
+    type: Sequelize.STRING
+  },
+  salt: {
+    type: Sequelize.STRING
   }
 })
 
