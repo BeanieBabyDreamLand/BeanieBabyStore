@@ -104,17 +104,10 @@ describe('Baby routes', () => {
             return request(app)
                 .post('/api/babies')
                 .send({
-<<<<<<< HEAD
-                    name: babyName2,
-                    poem: 'This little dog can\'t wait to grow, To rescue people lost in the snow, Don\'t let him out-keep him on your shelf, He doesn\'t know how to rescue himself!',
-                    price: '1000.00',
-                    inventory_qty: '5',
-=======
                     name: 'Mystic',
                     poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
                     price: '5000.00',
                     inventory_qty: '500',
->>>>>>> fc6dcc4b81afaa3ce827e9c405b0f0dc64d35a82
                     imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
                     category: 'rare'
                 })
@@ -132,11 +125,5 @@ describe('Baby routes', () => {
                 .delete('/api/babies/3')
                 .expect(204)
         })
-<<<<<<< HEAD
-        //we need to create a 201 status created for our posts
-    }) // end describe('/api/babies')
-})
-=======
     })
 })
->>>>>>> fc6dcc4b81afaa3ce827e9c405b0f0dc64d35a82
