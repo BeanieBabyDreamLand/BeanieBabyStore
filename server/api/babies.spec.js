@@ -33,7 +33,16 @@ describe('Baby routes', () => {
                     inventory_qty: '20',
                     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/71E25QZTEVL.gif',
                     category: 'common'
-                })
+            })
+            // ,
+            //     Baby.create({
+            //         name: 'Mystic',
+            //         poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
+            //         price: '5000.00',
+            //         inventory_qty: '1',
+            //         imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
+            //         category: 'rare'
+            // })
         })
 
         it('GET /api/babies', () => {
@@ -60,6 +69,23 @@ describe('Baby routes', () => {
             return request(app)
                 .post('/api/babies')
                 .send({
+                    name: 'Mystic',
+                    poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
+                    price: '5000.00',
+                    inventory_qty: '1',
+                    imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
+                    category: 'unicorn'
+                })
+                .expect(201)
+                .then(res => {
+                    expect(res.body.name).to.be.equal('Mystic')
+                })
+        })
+
+        it('POST /api/babies', () => {
+            return request(app)
+                .post('/api/babies')
+                .send({
                     name: babyName1,
                     poem: 'This little dog can\'t wait to grow, To rescue people lost in the snow, Don\'t let him out-keep him on your shelf, He doesn\'t know how to rescue himself!',
                     price: '1000.00',
@@ -73,22 +99,44 @@ describe('Baby routes', () => {
                 })
         })
 
+
         it('PUT /api/babies', () => {
             return request(app)
                 .post('/api/babies')
                 .send({
+<<<<<<< HEAD
                     name: babyName2,
                     poem: 'This little dog can\'t wait to grow, To rescue people lost in the snow, Don\'t let him out-keep him on your shelf, He doesn\'t know how to rescue himself!',
                     price: '1000.00',
                     inventory_qty: '5',
+=======
+                    name: 'Mystic',
+                    poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
+                    price: '5000.00',
+                    inventory_qty: '500',
+>>>>>>> fc6dcc4b81afaa3ce827e9c405b0f0dc64d35a82
                     imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
-                    category: 'common'
+                    category: 'rare'
                 })
-                .expect(409)
-                .then(res => {
-                    expect(res.text).to.be.equal('That Baby is already home')
+                .expect(201)
+                .expect('Content-Type', /json/)
+                .expect(function (res) {
+                    expect(res.body.category).to.equal('rare');
+                    expect(res.body.inventory_qty).to.equal(500)
                 })
+            //we need to create a 201 status created for our posts
+        }) // end describe('/api/babies')
+
+        it('DELETE /api/babies', () => {
+            return request(app)
+                .delete('/api/babies/3')
+                .expect(204)
         })
+<<<<<<< HEAD
         //we need to create a 201 status created for our posts
     }) // end describe('/api/babies')
 })
+=======
+    })
+})
+>>>>>>> fc6dcc4b81afaa3ce827e9c405b0f0dc64d35a82
