@@ -125,5 +125,4 @@ describe('Baby routes', () => {
                 .delete('/api/babies/3')
                 .expect(204)
         })
-    })
-})
+

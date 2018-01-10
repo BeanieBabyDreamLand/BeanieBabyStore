@@ -12,12 +12,16 @@ describe('User model', () => {
 
   /* create an un-saved user instance before every spec */
   var user;
+
   beforeEach(() => {
     user = User.build({
       email: 'testing@test.com',
       password: 'aBadPassword',
       firstname: 'Test',
-      lastname: 'ing'
+      lastname: 'ing',
+      isAdmin: false,
+      googleId: '',
+      salt: ''
     })
   })
 
@@ -29,7 +33,7 @@ describe('User model', () => {
   })
 
   describe('user attributes', function () {
-    it('has `email`, `password`, `firstname`, `lastname`, and `fullname` fields', function () {
+    it('has `email`, `password`, `firstname`, `lastname`, `fullname`, and `isAdmin` fields', function () {
       return user.save()
       .then(function (savedUser) {
         expect(savedUser.email).to.equal('testing@test.com')
@@ -46,6 +50,58 @@ describe('User model', () => {
       return user.validate()
       .then(function () {
         throw new Error('validation should fail because `notAnEmail` is not a valid email address')
+      },
+      function (result) {
+        expect(result).to.be.an.instanceOf(Error)
+      })
+    })
+
+    it('requires `email`', function () {
+
+      user.email = null;
+
+      return user.validate()
+      .then(function () {
+        throw new Error('validation should fail when email is null')
+      },
+      function (result) {
+        expect(result).to.be.an.instanceOf(Error)
+      })
+    })
+
+    it('requires `firstname`', function () {
+
+      user.firstname = null;
+
+      return user.validate()
+      .then(function () {
+        throw new Error('validation should fail when email is null')
+      },
+      function (result) {
+        expect(result).to.be.an.instanceOf(Error)
+      })
+    })
+
+    it('requires `lastname`', function () {
+
+      user.lastname = null;
+
+      return user.validate()
+      .then(function () {
+        throw new Error('validation should fail when email is null')
+      },
+      function (result) {
+        expect(result).to.be.an.instanceOf(Error)
+      })
+    })
+
+    it('requires `isAdmin`', function () {
+
+      user.isAdmin = null;
+
+      return user.validate()
+      .then(function () {
+        throw new Error('validation should fail when email is null')
       },
       function (result) {
         expect(result).to.be.an.instanceOf(Error)
