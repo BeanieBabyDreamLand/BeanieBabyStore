@@ -34,7 +34,7 @@ router.post('/', (req, res, next) => {
   })
     .then(arr => {
       if (arr[1]) {
-        res.send(arr[0])
+        res.status(201).send(arr[0])
       }
       else {
         let err = new Error('That Baby is already home')
