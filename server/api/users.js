@@ -1,23 +1,32 @@
 const router = require('express').Router()
-const { User } = require('../db/models')
+const { User, Baby, Review, Order, LineItem } = require('../db/models')
 module.exports = router
+
 
 router.get('/', (req, res, next) => {
   User.findAll({
-    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname']
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}]
   })
-    .then(users => res.json(users))
-    .catch(next)
+  .then(users => res.json(users))
+  .catch(next)
+})
+
+router.param('userId', (req, res, next, userId) => {
+  User.findOne({
+    where: {id: userId},
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}]
+    //include:[{ model: Baby}, {model: Review}, {model: Order}, {model: LineItem}]
+  })
+  .then(user => {
+    req.user = user;
+    next()
+  })
 })
 
 router.get('/:userId', (req, res, next) => {
-  const userId = req.params.userId
-  User.findOne({
-    where: {id: userId},
-    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname']
-  })
-    .then(users => res.json(users))
-    .catch(next)
+  res.send(req.user)
 })
 
 //create a new user (signup page) assumes it comes with req.body.email, req.body.password, req.body.firstname, req.body.lastname
@@ -42,13 +51,13 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next) => {
-  const userId = req.params.userId
+  console.log(req.user)
   User.update(
     req.body,
     {
       where:
-        { id: userId },
-      returing: true,
+        { id: req.user.id },
+      returning: true,
       plain: true
     })
     .then(() => {
@@ -58,9 +67,8 @@ router.put('/:userId', (req, res, next) => {
 })
 
 router.delete('/:userId', (req, res, next) => {
-  const userId = req.params.userId
   User.destroy({
-    where: { id: userId }
+    where: { id: req.user.id }
   })
   .then(() => {
     res.status(204).send('User deleted')
