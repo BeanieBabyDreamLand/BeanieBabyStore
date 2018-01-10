@@ -29,24 +29,15 @@ const User = db.define('user', {
     allowNull: false
   },
   isAdmin: {
-    type: Sequelize.BOOLEAN
+    type: Sequelize.BOOLEAN,
+    allowNull: false,
+    defaultValue: false
   },
   fullname: {
     type: Sequelize.VIRTUAL,
     get() {
       return this.firstname + ' ' + this.lastname
     }
-  },
-  isAdmin: {
-    type: Sequelize.BOOLEAN,
-    allowNull: false,
-    defaultValue: false
-  },
-  googleId: {
-    type: Sequelize.STRING
-  },
-  salt: {
-    type: Sequelize.STRING
   }
 })
 
