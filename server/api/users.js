@@ -1,6 +1,18 @@
 const router = require('express').Router()
-const { User } = require('../db/models')
+const { User, Baby, Review, Order, LineItem } = require('../db/models')
 module.exports = router
+
+router.param('userId', (req, res, next, userId) => {
+  User.findOne({
+    where: {id: userId},
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}]
+    //include:[{ model: Baby}, {model: Review}, {model: Order}, {model: LineItem}]
+  })
+    .then(users => res.json(users))
+    .catch(next)
+}
+)
 
 router.get('/', (req, res, next) => {
   User.findAll({
@@ -42,7 +54,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next) => {
-  const userId = req.params.userId
+  const userId = req.userId
   User.update(
     req.body,
     {
@@ -58,7 +70,7 @@ router.put('/:userId', (req, res, next) => {
 })
 
 router.delete('/:userId', (req, res, next) => {
-  const userId = req.params.userId
+  const userId = req.userId
   User.destroy({
     where: { id: userId }
   })
