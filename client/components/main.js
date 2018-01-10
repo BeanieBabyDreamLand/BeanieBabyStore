@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 import Home from './home'
+import AllBabies from './allBabies'
 
 /**
  * COMPONENT
@@ -13,11 +14,12 @@ import Home from './home'
  */
 const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
-
   return (
     <div>
       <nav className = "navbar navbar-expand-md fixed-top navbar-light">
       <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
+      <h1>Beanie Baby Dreamland</h1>
+      <nav>
         {
           isLoggedIn
             ? <div>
@@ -36,6 +38,9 @@ const Main = (props) => {
       {!isLoggedIn
         ? <Home />
         : ''}
+      <hr />
+      <AllBabies />
+      {children}
     </div>
   )
 }
