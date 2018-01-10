@@ -15,8 +15,36 @@ const Main = (props) => {
 
   return (
     <div>
-      <h1>BOILERMAKER</h1>
-      <nav>
+      <nav className = "navbar navbar-expand-md fixed-top">
+      <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
+        {/* <button className = "navbar-toggler collapsed" type = "button" data-toggle = "collapse" data-target = "#navbarCollapse" aria-controls = "navbarCollapse" aria-expanded = "false" aria-label = "Toggle navigation">
+             <span className = "navbar-toggler-icon" />
+          </button> 
+        <div className =  "navbar-collapse collapse" id = "navbarCollapse">
+          <ul className = "navbar-nav mr-auto">
+            <li className = "nav-item">
+              <a className = "nav-link" href="#">
+                "Home "
+                <span className="sr-only">(current)</span>
+              </a>
+            </li>
+            <li className = "nav-item">
+              <a className = "nav-link" href="#">
+                "Login "
+              </a>
+            </li>
+            <li className = "nav-item">
+              <a className = "nav-link" href="#">
+                "Sign up "
+              </a>
+            </li>
+            <li className = "nav-item">
+              <a className = "nav-link" href="#">
+                "Logout "
+              </a>
+            </li>
+          </ul>
+        </div> */}
         {
           isLoggedIn
             ? <div>

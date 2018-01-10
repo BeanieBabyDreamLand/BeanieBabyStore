@@ -1,5 +1,11 @@
 body {
   font-family: sans-serif;
+  margin-top: 5em;
+}
+
+body, html{
+  cursor: url(http://i916.photobucket.com/albums/ad9/sugarycandy/cursors/pinksparkly.gif), pointer;
+  height: 100%;
 }
 
 a {
