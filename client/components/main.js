@@ -19,7 +19,6 @@ const Main = (props) => {
       <nav className = "navbar navbar-expand-md fixed-top navbar-light">
       <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
       <h1>Beanie Baby Dreamland</h1>
-      <nav>
         {
           isLoggedIn
             ? <div>
