@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
+import Home from './home'
 import AllBabies from './allBabies'
 
 /**
@@ -15,6 +16,8 @@ const Main = (props) => {
   const {children, handleClick, isLoggedIn} = props
   return (
     <div>
+      <nav className = "navbar navbar-expand-md fixed-top navbar-light">
+      <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
       <h1>Beanie Baby Dreamland</h1>
       <nav>
         {
@@ -31,6 +34,10 @@ const Main = (props) => {
             </div>
         }
       </nav>
+      {children} {/* this is where the email and password login form is currently located*/}
+      {!isLoggedIn
+        ? <Home />
+        : ''}
       <hr />
       <AllBabies />
       {children}
