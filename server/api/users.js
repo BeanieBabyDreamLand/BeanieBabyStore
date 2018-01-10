@@ -16,20 +16,15 @@ router.param('userId', (req, res, next, userId) => {
 
 router.get('/', (req, res, next) => {
   User.findAll({
-    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname']
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}]
   })
     .then(users => res.json(users))
     .catch(next)
 })
 
 router.get('/:userId', (req, res, next) => {
-  const userId = req.params.userId
-  User.findOne({
-    where: {id: userId},
-    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname']
-  })
-    .then(users => res.json(users))
-    .catch(next)
+  next();
 })
 
 //create a new user (signup page) assumes it comes with req.body.email, req.body.password, req.body.firstname, req.body.lastname
@@ -54,12 +49,12 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next) => {
-  const userId = req.userId
+  console.log(req.userId)
   User.update(
     req.body,
     {
       where:
-        { id: userId },
+        { id: req.userId },
       returing: true,
       plain: true
     })
