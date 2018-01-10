@@ -12,11 +12,17 @@ const db = require('../db')
  *    BlogPost.belongsTo(User)
  */
 LineItem.belongsTo(Baby)
+Baby.hasMany(LineItem)
+
 Order.belongsTo(User)
+User.hasMany(Order)
+
 Order.hasMany(LineItem)
 LineItem.belongsTo(Order)
+
 Review.belongsTo(User)
 User.hasMany(Review)
+
 Review.belongsTo(Baby)
 Baby.hasMany(Review)
 
