@@ -6,7 +6,7 @@ module.exports = router
 router.get('/', (req, res, next) => {
   User.findAll({
     attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
-    include: [{model: Review}]
+    include: [{model: Review}, {model: Order}]
   })
   .then(users => res.json(users))
   .catch(next)
@@ -16,7 +16,7 @@ router.param('userId', (req, res, next, userId) => {
   User.findOne({
     where: {id: userId},
     attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
-    include: [{model: Review}]
+    include: [{model: Review}, {model: Order}]
     //include:[{ model: Baby}, {model: Review}, {model: Order}, {model: LineItem}]
   })
   .then(user => {
@@ -60,8 +60,8 @@ router.put('/:userId', (req, res, next) => {
       returning: true,
       plain: true
     })
-    .then(() => {
-      res.status(201).send('Updated!')
+    .then((user) => {
+      res.status(201).send(user)
     })
     .catch(next)
 })
