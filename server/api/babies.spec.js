@@ -77,7 +77,7 @@ describe('Baby routes', () => {
             return request(app)
                 .post('/api/babies')
                 .send({
-                    name: ,
+                    name: babyName2,
                     poem: 'This little dog can\'t wait to grow, To rescue people lost in the snow, Don\'t let him out-keep him on your shelf, He doesn\'t know how to rescue himself!',
                     price: '1000.00',
                     inventory_qty: '5',
@@ -91,4 +91,4 @@ describe('Baby routes', () => {
         })
         //we need to create a 201 status created for our posts
     }) // end describe('/api/babies')
-}) 
+})
