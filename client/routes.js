@@ -3,8 +3,8 @@ import {connect} from 'react-redux'
 import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome} from './components'
-import {me} from './store'
+import {Main, Login, Signup, UserHome, AllBabies, OneBaby} from './components'
+import {me, babiesThunk} from './store'
 
 /**
  * COMPONENT
@@ -21,17 +21,20 @@ class Routes extends Component {
       <Router history={history}>
         <Main>
           <Switch>
+
             {/* Routes placed here are available to all visitors */}
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
             {
               isLoggedIn &&
-                <Switch>
-                  {/* Routes placed here are only available after logging in */}
-                  <Route path="/home" component={UserHome} />
-                </Switch>
+              <Switch>
+              {/* Routes placed here are only available after logging in */}
+              <Route path="/home" component={UserHome} />
+              </Switch>
             }
             {/* Displays our Login component as a fallback */}
+            <Route exact path="/products" component={AllBabies} />
+            <Route path="/products/:id" component={OneBaby} />
             <Route component={Login} />
           </Switch>
         </Main>
@@ -55,6 +58,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(babiesThunk())
     }
   }
 }

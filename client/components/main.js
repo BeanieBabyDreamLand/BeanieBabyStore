@@ -38,7 +38,6 @@ const Main = (props) => {
         ? <Home />
         : ''}
       <hr />
-      <AllBabies />
       {children}
     </div>
   )
