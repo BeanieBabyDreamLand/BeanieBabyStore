@@ -4,9 +4,9 @@ module.exports = router
 
 router.param('orderId', (req, res, next, orderId) => {
   Order.findOne( {
-      where: { id: orderId }, 
+      where: { id: orderId },
       include: [{ model: User,
-                  attributes: ['firstname', 'lastname', 'fullname']},
+                  attributes: ['firstname', 'lastname', 'fullname', 'email']},
                 {model: LineItem}]
     } )
     .then(order => {
@@ -18,7 +18,7 @@ router.param('orderId', (req, res, next, orderId) => {
 router.get('/', (req, res, next) => {
   Order.findAll({
       include: [{model: User,
-                  attributes: ['firstname', 'lastname', 'fullname']},
+                  attributes: ['firstname', 'lastname', 'fullname', 'email']},
                 {model: LineItem}]
   })
     .then(orders => res.json(orders))
@@ -37,7 +37,7 @@ info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
 router.post('/', (req, res, next) => {
   Order.findOrCreate({
     where: { userId: req.body.userId,
-            total: 0, 
+            total: 0,
             complete: false}
   })
     .then(arr => {
