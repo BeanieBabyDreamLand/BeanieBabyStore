@@ -33,6 +33,7 @@ const Main = (props) => {
         }
       </nav>
       {/* {children}  this is where the email and password login form is currently located*/}
+
       {children}
       <hr />
     </div>
