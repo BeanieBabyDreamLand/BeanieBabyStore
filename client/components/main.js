@@ -33,15 +33,9 @@ const Main = (props) => {
         }
       </nav>
       {/* {children}  this is where the email and password login form is currently located*/}
-      {!isLoggedIn 
-        ? <Home />
-        : ''}
-      <hr />
-<<<<<<< HEAD
+      
       {children}
-=======
-      <AllBabies />
->>>>>>> b46f68fd8f275121593fd2bb8a16eca080f5466a
+      <hr />
     </div>
   )
 }
