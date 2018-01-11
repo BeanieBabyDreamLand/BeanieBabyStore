@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {babiesThunk} from '../store'
+import store, {babiesThunk, getBabyCategory} from '../store'
 
 function mapStateProps(state){
   return {
@@ -12,17 +12,32 @@ function mapDispatchProps(dispatch){
   return {
     loadData (){
       dispatch(babiesThunk())
+    },
+    handleChange (evt){
+      evt.preventDefault()
+      return dispatch(getBabyCategory(evt.target.value))
     }
   }
 }
 
 export const allBabies = (props) => {
   const babies = props.babies;
+  console.log('props history', props.history)
+
   return (
     <div>
-      We will put the beanie babies here
       <div>
-      {babies && babies.map(baby => {
+        <form onChange={props.handleChange}>
+          <select name='refine'>
+            <option value='rare'>Rare</option>
+            <option value='common'>Common</option>
+            <option value='unicorn'>Unicorn</option>
+            <option value='all'>All</option>
+          </select>
+        </form>
+      </div>
+
+      {babies.length && babies.map(baby => {
         return(
           <Link to={`/products/${baby.id}`} key={baby.id} >
           <div >
@@ -32,7 +47,6 @@ export const allBabies = (props) => {
           </Link>
         )
       })}
-      </div>
     </div>
   )
 }
