@@ -35,7 +35,6 @@ export const fetchOneBaby = (id) =>
     axios.get(`/api/babies/${id}`)
       .then(res =>
         dispatch(getOneBaby(res.data || defaultBabies)))
-      .then(res => console.log(res.data))
       .catch(err => console.log(err))
 
 /**
@@ -45,6 +44,8 @@ export default function (state = defaultBabies, action) {
   switch (action.type) {
     case GET_BABIES:
       return action.babies
+    case GET_ONE_BABY:
+      return action.baby
     default:
       return state
   }

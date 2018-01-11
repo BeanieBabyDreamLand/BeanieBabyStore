@@ -18,7 +18,6 @@ function mapDispatchProps(dispatch){
 
 export const allBabies = (props) => {
   const babies = props.babies;
-  console.log('HEY' ,babies)
   return (
     <div>
       We will put the beanie babies here
@@ -29,7 +28,7 @@ export const allBabies = (props) => {
           <div >
             <h3>{baby.name}</h3>
             <img src={ baby.imageUrl } />
-          </div> 
+          </div>
           </Link>
         )
       })}
