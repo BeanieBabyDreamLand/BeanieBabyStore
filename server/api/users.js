@@ -1,16 +1,6 @@
 const router = require('express').Router()
-const { User, Baby, Review, Order, LineItem } = require('../db/models')
+const { User, Review, Order } = require('../db/models')
 module.exports = router
-
-
-router.get('/', (req, res, next) => {
-  User.findAll({
-    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
-    include: [{model: Review}, {model: Order}]
-  })
-  .then(users => res.json(users))
-  .catch(next)
-})
 
 router.param('userId', (req, res, next, userId) => {
   User.findOne({
@@ -20,9 +10,18 @@ router.param('userId', (req, res, next, userId) => {
     //include:[{ model: Baby}, {model: Review}, {model: Order}, {model: LineItem}]
   })
   .then(user => {
-    req.user = user;
+    req.user = user
     next()
   })
+})
+
+router.get('/', (req, res, next) => {
+  User.findAll({
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}, {model: Order}]
+  })
+  .then(users => res.json(users))
+  .catch(next)
 })
 
 router.get('/:userId', (req, res, next) => {
@@ -60,8 +59,8 @@ router.put('/:userId', (req, res, next) => {
       returning: true,
       plain: true
     })
-    .then((user) => {
-      res.status(201).send(user)
+    .then((userArr) => {
+      res.status(201).send(userArr[1])
     })
     .catch(next)
 })

@@ -1,24 +1,29 @@
 const router = require('express').Router()
 const {Baby} = require('../db/models')
-const {Review} = require('../db/models')
+const {Review, LineItem} = require('../db/models')
 module.exports = router
+
+router.param('babyId', (req, res, next, babyId) => {
+  Baby.findOne( {
+      where: { id: babyId }, 
+      include: [{ model: Review}, {model: LineItem}]
+    } )
+    .then(baby => {
+      req.baby = baby
+      next()
+    })
+})
 
 router.get('/', (req, res, next) => {
   Baby.findAll({
+    include: [{ model: Review}, {model: LineItem}]
   })
     .then(babies => res.json(babies))
     .catch(next)
 })
 
-
 router.get('/:babyId', (req, res, next) => {
-  const babyId = req.params.babyId
-  Baby.findAll( {
-      where: { id: babyId }, 
-      include: [{ model: Review}]
-    } )
-    .then(babies => res.json(babies))
-    .catch(next)
+  res.send(req.baby)
 })
 
 //just for admins
@@ -46,25 +51,23 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:babyId', (req, res, next) => {
-  const babyId = req.params.babyId
   Baby.update(
     req.body,
     {
       where:
-        { id: babyId },
-      returing: true,
+        { id: req.baby.id },
+      returning: true,
       plain: true
     })
-    .then(() => {
-      res.status(201).send('Updated!')
+    .then((babyArr) => {
+      res.status(201).send(babyArr[1])
     })
     .catch(next)
 })
 
 router.delete('/:babyId', (req, res, next) => {
-  const babyId = req.params.babyId
   Baby.destroy({
-    where: { id: babyId }
+    where: { id: req.baby.id }
   })
   .then(() => {
     res.status(204).send('User deleted')

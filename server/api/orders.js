@@ -63,8 +63,8 @@ router.put('/:orderId', (req, res, next) => {
       returning: true,
       plain: true
     })
-    .then((arr) => {
-      res.status(201).send(arr[1])
+    .then((orderArr) => {
+      res.status(201).send(orderArr[1])
     })
     .catch(next)
 })
