@@ -23,19 +23,20 @@ const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
 /**
  * THUNK CREATORS
  */
-export const getInitialCartThunk = (userId) =>
+export const getInitialCartThunk = (email) =>
   dispatch =>
     axios.get(`/api/orders`)
       .then(allOrders => {
+        allOrders = allOrders.data
         const currentOrder = allOrders.find(order => {
-          if (order.userId === userId && order.complete === false){
+          if (order.user.email === email && order.complete === false){
             return order.lineItems
           }
         })
         dispatch(getCart(currentOrder))
-      .then(res => console.log(res.data))
-      .catch(err => console.log(err))
       })
+      .catch(err => console.log(err))
+
 
 /**
  * REDUCER
