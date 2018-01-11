@@ -37,7 +37,11 @@ const Main = (props) => {
         ? <Home />
         : ''}
       <hr />
+<<<<<<< HEAD
+      {children}
+=======
       <AllBabies />
+>>>>>>> b46f68fd8f275121593fd2bb8a16eca080f5466a
     </div>
   )
 }

@@ -5,5 +5,7 @@
  */
 export {default as Main} from './main'
 export {default as UserHome} from './user-home'
+export {default as OneBaby} from './oneBaby'
+export {default as AllBabies} from './allBabies'
 
 export {Login, Signup} from './auth-form'
