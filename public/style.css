@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  margin-top: 5em;
+  background-color: rgb(255,173,194);
 }
 
 body, html{
@@ -20,6 +20,16 @@ a {
 
 label {
   display: block;
+}
+
+nav{
+  height: 50px;
+  background-color: rgb(149,152,238)
+}
+
+
+.navbar-light .navbar-brand{
+  color: white;
 }
 
 nav a {
