@@ -6,7 +6,8 @@ import { Review } from './index'
 
 function mapStateProps(state){
     return {
-      babies: state.babies
+      babies: state.babies,
+      cart: state.cart
     }
   }
   function mapDispatchProps(dispatch){
@@ -14,10 +15,13 @@ function mapStateProps(state){
       loadData (){
         dispatch(fetchOneBaby(this.req.params.id))
       },
-      handleSubmit (evt, babyId){
+      updateCart (evt){
         evt.preventDefault()
-        console.log('here is add to cart functionality')
-        console.log('babyId is ', babyId)
+        console.log('CALLING UPDATE CART')
+      },
+      createLineItem (evt){
+        evt.preventDefault()
+        console.log('CREATING LINE ITEM')
       }
     }
   }
@@ -51,7 +55,18 @@ function mapStateProps(state){
             <img src={baby.imageUrl} />
             <h5>This baby is {baby.category}</h5>
 
-              <button type="submit" onClick={(evt)=>{this.props.handleSubmit(evt, baby)}}>Add To Cart</button>
+              <button type="submit" onClick={(evt) => {
+                let updateCart = false
+                this.props.cart.forEach(lineItem => {
+                  if (lineItem.babyId === baby.id){
+                    updateCart = true
+                  }
+                })
+                let func = (updateCart) ? this.props.updateCart : this.props.createLineItem
+                func(evt)
+               // this.props.handleSubmit(evt, baby)
+
+                }}>Add To Cart</button>
 
             <Review props={this.props}/>
           </div>
