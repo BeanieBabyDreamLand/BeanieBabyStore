@@ -17,7 +17,7 @@ const Main = (props) => {
   return (
     <div>
       <nav className = "navbar navbar-expand-md navbar-light">
-      <a className = "navbar-brand" href="/">Beanie Baby Dreamland</a>
+      <a className = "navbar-brand" href="/">Beanie Baby DreamLand</a>
         {
           isLoggedIn
             ? <div>
