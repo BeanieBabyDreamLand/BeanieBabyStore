@@ -2,10 +2,12 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {babiesThunk, fetchOneBaby} from '../store'
+import { Review } from './index'
 
 function mapStateProps(state){
     return {
-      babies: state.babies
+      babies: state.babies,
+      cart: state.cart
     }
   }
   function mapDispatchProps(dispatch){
@@ -13,17 +15,25 @@ function mapStateProps(state){
       loadData (){
         dispatch(fetchOneBaby(this.req.params.id))
       },
-      handleSubmit (evt){
+      updateCart (evt){
         evt.preventDefault()
-        console.log('here is add to cart functionality')
+        console.log('CALLING UPDATE CART')
+      },
+      createLineItem (evt){
+        evt.preventDefault()
+        console.log('CREATING LINE ITEM')
       }
     }
   }
 
   export class oneBaby extends Component {
-    componentDidMount(){
-        const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
+    componentWillMount(){
+      const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
         store.dispatch(oneBabyThunk)
+    }
+    componentDidMount(){
+      const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
+      store.dispatch(oneBabyThunk)
     }
 
     componentWillUnmount() {
@@ -32,7 +42,7 @@ function mapStateProps(state){
     }
 
     render(){
-      console.log(this.props)
+      console.log('is this one baby????', this.props)
       const baby = this.props.babies
 
         return (
@@ -44,9 +54,21 @@ function mapStateProps(state){
             <p>{baby.price}</p>
             <img src={baby.imageUrl} />
             <h5>This baby is {baby.category}</h5>
-            <form onSubmit={this.props.handleSubmit}>
-              <button type="submit" >Add To Cart</button>
-            </form>
+
+              <button type="submit" onClick={(evt) => {
+                let updateCart = false
+                this.props.cart.forEach(lineItem => {
+                  if (lineItem.babyId === baby.id){
+                    updateCart = true
+                  }
+                })
+                let func = (updateCart) ? this.props.updateCart : this.props.createLineItem
+                func(evt)
+               // this.props.handleSubmit(evt, baby)
+
+                }}>Add To Cart</button>
+
+            <Review props={this.props}/>
           </div>
           }
         </div>
