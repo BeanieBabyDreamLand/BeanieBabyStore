@@ -14,9 +14,10 @@ function mapStateProps(state){
       loadData (){
         dispatch(fetchOneBaby(this.req.params.id))
       },
-      handleSubmit (evt){
+      handleSubmit (evt, babyId){
         evt.preventDefault()
         console.log('here is add to cart functionality')
+        console.log('babyId is ', babyId)
       }
     }
   }
@@ -37,7 +38,7 @@ function mapStateProps(state){
     }
 
     render(){
-      console.log(this.props)
+      console.log('is this one baby????', this.props)
       const baby = this.props.babies
 
         return (
@@ -49,10 +50,10 @@ function mapStateProps(state){
             <p>{baby.price}</p>
             <img src={baby.imageUrl} />
             <h5>This baby is {baby.category}</h5>
+
+              <button type="submit" onClick={(evt)=>{this.props.handleSubmit(evt, baby)}}>Add To Cart</button>
+
             <Review props={this.props}/>
-            <form onSubmit={this.props.handleSubmit}>
-              <button type="submit" >Add To Cart</button>
-            </form>
           </div>
           }
         </div>
