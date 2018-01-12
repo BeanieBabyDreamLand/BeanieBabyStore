@@ -19,7 +19,8 @@ router.get('/', (req, res, next) => {
   Order.findAll({
       include: [{model: User,
                   attributes: ['firstname', 'lastname', 'fullname', 'email']},
-                {model: LineItem}]
+                {model: LineItem}
+              ]
   })
     .then(orders => res.json(orders))
     .catch(next)

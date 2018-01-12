@@ -33,7 +33,20 @@ export const getInitialCartThunk = (email) =>
             return order.lineItems
           }
         })
-        dispatch(getCart(currentOrder))
+        return currentOrder
+       // dispatch(getCart(currentOrder))
+      })
+      .then((currentOrder) => {
+        const databaseCartData = [];
+        currentOrder.lineItems.forEach((item) => {
+          const lineItemId = item.id
+          axios.get(`api/lineItems/${lineItemId}`)
+          .then((itemData) => {
+           databaseCartData.push(itemData.data)
+          })
+        })
+        dispatch(getCart(databaseCartData))
+
       })
       .catch(err => console.log(err))
 
