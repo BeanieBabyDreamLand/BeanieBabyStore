@@ -24,7 +24,9 @@ label {
 
 nav{
   height: 50px;
-  background-color: rgb(149,152,238)
+  background-color: rgb(149,152,238);
+  border-bottom-left-radius: .5em;
+  border-bottom-right-radius: .5em;
 }
 
 

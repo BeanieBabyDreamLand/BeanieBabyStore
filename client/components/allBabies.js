@@ -29,10 +29,10 @@ export const allBabies = (props) => {
       <div>
         <form onChange={props.handleChange}>
           <select name='refine'>
+            <option value='all'>All</option>
             <option value='rare'>Rare</option>
             <option value='common'>Common</option>
             <option value='unicorn'>Unicorn</option>
-            <option value='all'>All</option>
           </select>
         </form>
       </div>
