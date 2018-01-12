@@ -17,23 +17,26 @@ const Main = (props) => {
   return (
     <div>
       <nav className = "navbar navbar-expand-md navbar-light">
-      <a className = "navbar-brand" href="#">Beanie Baby Dreamland</a>
+      <a className = "navbar-brand" href="/">Beanie Baby Dreamland</a>
         {
           isLoggedIn
             ? <div>
               {/* The navbar will show these links after you log in */}
               <Link to="/home">Home</Link>
+              <Link to="/products">Products</Link>
               <a href="#" onClick={handleClick}>Logout</a>
             </div>
             : <div >
               {/* The navbar will show these links before you log in */}
+              <Link to="/home">Home</Link>
+              <Link to="/products">Products</Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
+              
             </div>
         }
       </nav>
       {/* {children}  this is where the email and password login form is currently located*/}
-
       {children}
       <hr />
     </div>
