@@ -15,7 +15,13 @@ function mapDispatchProps(dispatch){
     },
     handleChange (evt){
       evt.preventDefault()
-      return dispatch(getBabyCategory(evt.target.value))
+      console.log('CHANGE', evt)
+      if (typeof (evt.target.value) === 'string') { 
+        return dispatch(getBabyCategory(evt.target.value)) 
+      }
+    },
+    handleSubmit (evt){
+      console.log('SUBMIT',evt)
     }
   }
 }
@@ -27,24 +33,29 @@ export const allBabies = (props) => {
   return (
     <div>
       <div>
-        <form onChange={props.handleChange}>
-          <select name='refine'>
+        <form >
+          <select name='refine' onChange={props.handleChange}>
             <option value='all'>All</option>
             <option value='rare'>Rare</option>
             <option value='common'>Common</option>
             <option value='unicorn'>Unicorn</option>
           </select>
-        </form>
-      </div>
-
+          </form>
+        </div>
       {babies.length && babies.map(baby => {
         return(
-          <Link to={`/products/${baby.id}`} key={baby.id} >
-          <div >
-            <h3>{baby.name}</h3>
-            <img src={ baby.imageUrl } />
+          <div key={baby.id}>
+            <div>
+              <Link to={`/products/${baby.id}`}  >{baby.name}</Link>
+              <img src={ baby.imageUrl } />
+            </div>
+            <div>
+              <form onSubmit={props.handleSubmit}>
+                <button type="submit" >Add To Cart</button>
+              </form>
+            </div>
+            <br />
           </div>
-          </Link>
         )
       })}
     </div>
