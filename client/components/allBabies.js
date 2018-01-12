@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {babiesThunk, getBabyCategory} from '../store'
+import store, {babiesThunk, getBabyCategory, getSearchResults} from '../store'
 
 function mapStateProps(state){
   return {
@@ -16,16 +16,24 @@ function mapDispatchProps(dispatch){
     handleChange (evt){
       evt.preventDefault()
       console.log('CHANGE', evt)
-      if (typeof (evt.target.value) === 'string') { 
-        return dispatch(getBabyCategory(evt.target.value)) 
+      if (typeof (evt.target.value) === 'string') {
+        return dispatch(getBabyCategory(evt.target.value))
       }
     },
     handleSubmit (evt){
       console.log('SUBMIT',evt)
+    },
+    handleSearchChange (evt){
+      evt.preventDefault()
+      // return evt.target.value
+    },
+    handleSubmitSearch (evt){
+      evt.preventDefault()
+      console.log(evt.target.search.value)
     }
   }
 }
-
+const inputValue = ''
 export const allBabies = (props) => {
   const babies = props.babies;
   console.log('props history', props.history)
@@ -40,7 +48,19 @@ export const allBabies = (props) => {
             <option value='common'>Common</option>
             <option value='unicorn'>Unicorn</option>
           </select>
-          </form>
+        </form>
+        <form className='search' onSubmit={props.handleSubmitSearch} >
+          <label>Search:
+            <input
+              name='search'
+              type='text'
+              onChange={props.handleSearchChange}
+              // value=""
+            />
+          </label>
+          <button type='submit'>Go</button>
+        </form>
+
         </div>
       {babies.length && babies.map(baby => {
         return(
