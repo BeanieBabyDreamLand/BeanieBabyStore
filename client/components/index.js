@@ -8,5 +8,6 @@ export {default as UserHome} from './user-home'
 export {default as OneBaby} from './oneBaby'
 export {default as AllBabies} from './allBabies'
 export {default as Home} from './home'
+export {default as Cart} from './cart'
 
 export {Login, Signup} from './auth-form'
