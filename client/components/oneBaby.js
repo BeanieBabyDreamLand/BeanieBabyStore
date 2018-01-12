@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {babiesThunk, fetchOneBaby} from '../store'
+import { Review } from './index'
 
 function mapStateProps(state){
     return {
@@ -21,9 +22,13 @@ function mapStateProps(state){
   }
 
   export class oneBaby extends Component {
-    componentDidMount(){
-        const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
+    componentWillMount(){
+      const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
         store.dispatch(oneBabyThunk)
+    }
+    componentDidMount(){
+      const oneBabyThunk = fetchOneBaby(this.props.match.params.id)
+      store.dispatch(oneBabyThunk)
     }
 
     componentWillUnmount() {
@@ -44,6 +49,7 @@ function mapStateProps(state){
             <p>{baby.price}</p>
             <img src={baby.imageUrl} />
             <h5>This baby is {baby.category}</h5>
+            <Review props={this.props}/>
             <form onSubmit={this.props.handleSubmit}>
               <button type="submit" >Add To Cart</button>
             </form>
