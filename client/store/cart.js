@@ -25,29 +25,30 @@ const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
  */
 export const getInitialCartThunk = (email) =>
   dispatch =>
-    axios.get(`/api/orders`)
-      .then(allOrders => {
-        allOrders = allOrders.data
-        const currentOrder = allOrders.find(order => {
-          if (order.user.email === email && order.complete === false){
-            return order.lineItems
-          }
-        })
-        return currentOrder
-       // dispatch(getCart(currentOrder))
-      })
-      .then((currentOrder) => {
-        const databaseCartData = [];
-        currentOrder.lineItems.forEach((item) => {
-          const lineItemId = item.id
-          axios.get(`api/lineItems/${lineItemId}`)
-          .then((itemData) => {
-           databaseCartData.push(itemData.data)
-          })
-        })
-        dispatch(getCart(databaseCartData))
-
-      })
+  axios.get('/api/cart')
+    // axios.get(`/api/orders`)
+    //   .then(allOrders => {
+    //     allOrders = allOrders.data
+    //     const currentOrder = allOrders.find(order => {
+    //       if (order.user.email === email && order.complete === false){
+    //         return order.lineItems
+    //       }
+    //     })
+    //     return currentOrder
+    //    // dispatch(getCart(currentOrder))
+    //   })
+    //   .then((currentOrder) => {
+    //     const databaseCartData = [];
+    //     currentOrder.lineItems.forEach((item) => {
+    //       const lineItemId = item.id
+    //       axios.get(`api/lineItems/${lineItemId}`)
+    //       .then((itemData) => {
+    //        databaseCartData.push(itemData.data)
+    //       })
+    //     })
+    //     dispatch(getCart(databaseCartData))
+    //   })
+      .then(cart => dispatch(getCart(cart.data)))
       .catch(err => console.log(err))
 
 
