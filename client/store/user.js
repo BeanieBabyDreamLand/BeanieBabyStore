@@ -48,6 +48,14 @@ export const logout = () =>
       })
       .catch(err => console.log(err))
 
+export const fetchAllUsers = () =>
+  dispatch =>
+    axios.get('/api/users')
+      .then(res => {
+        console.log('res.data', res.data)
+        dispatch(getUser(res.data || defaultUser ))})
+      .catch(err => console.log(err))
+
 /**
  * REDUCER
  */

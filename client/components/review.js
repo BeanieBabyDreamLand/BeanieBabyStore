@@ -1,25 +1,30 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {fetchBabies, babiesThunk, fetchOneBaby, getBabyCategory, getSearchResults} from '../store'
+import store, {fetchBabies, babiesThunk, fetchOneBaby, getBabyCategory, getSearchResults, fetchAllUsers} from '../store'
 
 function mapStateProps(state){
   return {
-    babies: state.babies
+    babies: state.babies,
+    user: state.user
   }
 }
 function mapDispatchProps(dispatch){
     return {
         loadData (){
+            dispatch(fetchAllUsers())
             dispatch(fetchOneBaby(this.req.params.id))
         }
+
     }
 }
 
 export const review = (props) => {
     console.log('!!!!',props.babies, props.match.params)
+    let users = props.users
+    console.log(users)
     let thisBaby = props.babies
-    return(
+    return (
         <div>
         <h3>Reviews and high praise for {thisBaby.name}</h3>
         {thisBaby && thisBaby.reviews &&
@@ -28,7 +33,7 @@ export const review = (props) => {
                 return (
                     <div key={review.id}>
                        <h4>Stars: { review.rating } </h4>
-                       <p></p>
+                       {/* <p>{this.Baby.reviews</p> */}
                     </div>
                 )
             })}</div>
