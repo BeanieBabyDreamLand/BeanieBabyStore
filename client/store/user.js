@@ -42,6 +42,9 @@ export const auth = (email, password, method) =>
 export const logout = () =>
   dispatch =>
     axios.post('/auth/logout')
+      .then(() => {
+        axios.delete('/api/cart')
+      })
       .then(_ => {
         dispatch(removeUser())
         history.push('/login')
