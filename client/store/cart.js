@@ -41,11 +41,12 @@ export const addToCartThunk = (Item) =>
       })
     .catch(err => console.log(err))
 
-export const updateCartThunk = (item) => 
+export const updateCartThunk = (Item) =>
       dispatch =>
         axios.put('api/lineItems', {price: Item.price, quantity: 1, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
         .then(updatedItem => {
-          dispatch(updateCart(updatedItem.data))
+          console.log(updatedItem)
+          return dispatch(updateCart(updatedItem.data))
         })
         .catch(err => console.log(err))
 

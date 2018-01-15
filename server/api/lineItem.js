@@ -61,7 +61,7 @@ router.put('/:lineItemId', (req, res, next) => {
     }
   )    
   .then((lineItemArr) => {
-    res.status(201).send(lineItemArr[1])
+    return res.status(201).json(lineItemArr)
   })
   .catch(next)
 })
