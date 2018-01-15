@@ -1,4 +1,5 @@
 const router = require('express').Router()
+const {User} = require('../db/models')
 module.exports = router
 
 let stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
@@ -26,15 +27,22 @@ router.post('/customer', (req, res, next) => {
 // }
 
 //create a new order
+//need to pass address object from form and userId from cart[0].order.userId
 router.post('/order', (req, res, next) => {
-  let {address} = req.body
-  //first find user by email then create order;
-
-  stripe.orders.create({
-    currency: 'usd',
-    shipping: address
-  }, function(err, order){
-    if (err) console.err('err is ', err)
-    else console.log('order is ', order)
+  let {address, userId} = req.body
+  //first find user by id and get stripeId then create order
+  User.findOne({
+    where: { id: userId }
+  })
+  .then(user => {
+    const stripeId = user.stripeId
+    stripe.orders.create({
+      currency: 'usd',
+      shipping: address,
+      customer: stripeId
+    }, function(err, order){
+      if (err) console.err('err is ', err)
+      else console.log('order is ', order)
+    })
   })
 })
