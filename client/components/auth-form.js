@@ -71,14 +71,15 @@ const mapDispatch = (dispatch) => {
     handleSubmit (evt) {
       evt.preventDefault()
       const formName = evt.target.name
-      const firstname = evt.target.firstname.value
-      const lastname = evt.target.lastname.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      if (firstname && lastname) {
-        dispatch(auth( firstname, lastname, email, password, formName  )) //signs up and makes a user
+
+      if (evt.target.firstname && evt.target.lastname) {
+        const firstname = evt.target.firstname.value
+        const lastname = evt.target.lastname.value
+        dispatch(auth(  email, password, formName, firstname, lastname  ))
         .then(() => {
-          dispatch(me()) //put the user on the state
+          dispatch(me()) 
         })
         .then(() => {
          dispatch(createNewIncompleteOrderThunk())
@@ -87,7 +88,7 @@ const mapDispatch = (dispatch) => {
          dispatch(getInitialCartThunk())
         })
       } 
-      if (!firstname || !lastname) {
+      if (!evt.target.firstname || !evt.target.lastname) {
         dispatch(auth( email, password, formName  ))
         .then(() => {
           dispatch(getInitialCartThunk())
