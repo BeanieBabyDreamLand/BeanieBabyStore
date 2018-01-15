@@ -1,5 +1,7 @@
 const router = require('express').Router()
 const User = require('../db/models/user')
+const Review = require('../db/models/review')
+const Order = require('../db/models/order')
 module.exports = router
 
 router.post('/login', (req, res, next) => {
@@ -36,7 +38,12 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  User.findOne({
+    where: {id: req.user.id},
+    attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
+    include: [{model: Review}, {model: Order}]
+  })
+  .then(user => res.json(user))
 })
 
 router.use('/google', require('./google'))

@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {babiesThunk, fetchOneBaby} from '../store'
+import store, {babiesThunk, fetchOneBaby, addToCartThunk, updateCartThunk} from '../store'
 import { Review } from './index'
 
 function mapStateProps(state){
     return {
       babies: state.babies,
-      cart: state.cart
+      cart: state.cart,
+      order: state.order,
+      user: state.user
     }
   }
   function mapDispatchProps(dispatch){
@@ -18,10 +20,15 @@ function mapStateProps(state){
       updateCart (evt){
         evt.preventDefault()
         console.log('CALLING UPDATE CART')
+        const currentQuant = this.cart.find(elem => {
+          return elem.babyId === +this.match.params.id
+        }).quantity
+        dispatch(updateCartThunk({price: this.babies.price, quantity: currentQuant + 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}))
       },
       createLineItem (evt){
         evt.preventDefault()
         console.log('CREATING LINE ITEM')
+        dispatch(addToCartThunk({price: this.babies.price, quantity: 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}))
       }
     }
   }
@@ -36,7 +43,7 @@ function mapStateProps(state){
       store.dispatch(oneBabyThunk)
     }
 
-    componentWillUnmount() {
+    componentWillUnmount(){
       const fetchBabies = babiesThunk()
       store.dispatch(fetchBabies)
     }
@@ -57,14 +64,17 @@ function mapStateProps(state){
 
               <button type="submit" onClick={(evt) => {
                 let updateCart = false
+                //this.props.cart is the cart on the state not session
+                //---if this baby is already in the cart ---\\
                 this.props.cart.forEach(lineItem => {
                   if (lineItem.babyId === baby.id){
                     updateCart = true
                   }
                 })
                 let func = (updateCart) ? this.props.updateCart : this.props.createLineItem
-                func(evt)
-               // this.props.handleSubmit(evt, baby)
+                //func(evt)
+                //for testing:
+                this.props.updateCart(evt)
 
                 }}>Add To Cart</button>
 

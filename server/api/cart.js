@@ -58,12 +58,7 @@ router.put('/:lineItemId', (req, res, next) => {
     .catch(next)
 })
 
-// ---- add to cart (must be called with a lineItem object as it's body) --- \\
-router.post('/', (req, res, next) => {
-    req.session.cart = [...req.body]
-    res.send(req.session.cart)
-    .catch(next)
-})
+//we don't have to have post and put requests for the session cart becuase we are jut reloading it at every hard refresh from the database data
 
 // ---- remove from cart ---- \\
 router.delete('/:lineItemId', (req, res, next) => {
