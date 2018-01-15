@@ -32,8 +32,8 @@ export const getCurrentOrderThunk = () =>
   .catch(err => console.log(err))
 
 export const createNewIncompleteOrderThunk = () =>
-  dispatch =>
-  axios.post('/api/orders')
+  (dispatch, getState) =>
+  axios.post('/api/orders', {userId: getState().user.id})
   .then(newIncompleteOrder => {
       return newIncompleteOrder.data
   })
@@ -46,6 +46,8 @@ export const createNewIncompleteOrderThunk = () =>
 export default function (state = defaultOrder, action) {
     switch (action.type) {
       case GET_CURRENT_ORDER:
+        return action.order
+      case SET_CURRENT_ORDER:
         return action.order
       default:
         return state

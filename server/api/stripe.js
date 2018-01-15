@@ -1,10 +1,11 @@
 const router = require('express').Router()
-const {User} = require('../db/models')
+const {User, Order} = require('../db/models')
 module.exports = router
 
 let stripe = require('stripe')(process.env.STRIPE_SECRET_KEY)
 
 //create a new customer
+//haven't tested yet (hardcoding customers to start)
 router.post('/customer', (req, res, next) => {
   let {name, email} = req.body
   stripe.customers.create({
@@ -45,4 +46,5 @@ router.post('/order', (req, res, next) => {
       else console.log('order is ', order)
     })
   })
+  .catch(next)
 })

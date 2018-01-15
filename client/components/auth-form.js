@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, cart, getInitialCartThunk} from '../store'
+import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from '../store'
 
 /**
  * COMPONENT
@@ -12,6 +12,18 @@ const AuthForm = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
+      {props.name === 'signup' && 
+        (<div>
+          <div>
+          <label htmlFor="firstname"><small>First Name</small></label>
+          <input name="firstname" type="string" />
+        </div>
+        <div>
+          <label htmlFor="lastname"><small>Last Name</small></label>
+          <input name="lastname" type="string" />
+        </div>
+        </div>)
+        }
         <div>
           <label htmlFor="email"><small>Email</small></label>
           <input name="email" type="text" />
@@ -49,7 +61,8 @@ const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -58,12 +71,29 @@ const mapDispatch = (dispatch) => {
     handleSubmit (evt) {
       evt.preventDefault()
       const formName = evt.target.name
+      const firstname = evt.target.firstname.value
+      const lastname = evt.target.lastname.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
-      .then(() => {
-        dispatch(getInitialCartThunk())
-      })
+      if (firstname && lastname) {
+        dispatch(auth( firstname, lastname, email, password, formName  )) //signs up and makes a user
+        .then(() => {
+          dispatch(me()) //put the user on the state
+        })
+        .then(() => {
+         dispatch(createNewIncompleteOrderThunk())
+        })
+        .then(() => {
+         dispatch(getInitialCartThunk())
+        })
+      } 
+      if (!firstname || !lastname) {
+        dispatch(auth( email, password, formName  ))
+        .then(() => {
+          dispatch(getInitialCartThunk())
+        })
+      }
+      
     }
   }
 }
