@@ -43,3 +43,21 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.slide {
+  height: 70vh;
+  width: 100vw;
+  object-fit: fill;
+}
+
+.carousel-caption {
+  text-shadow:1px 1px gray
+}
+
+#clearButton {
+  padding-left: 1em
+}
+
+#submit-btn {
+  margin-left: 1em
+}
