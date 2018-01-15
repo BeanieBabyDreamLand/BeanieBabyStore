@@ -5,15 +5,18 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import babies from './babies'
 import cart from './cart'
+import review from './review'
 import order from './order'
 import checkout from './checkout'
+
 
 const reducer = combineReducers({
   user,
   babies,
   cart,
   order,
-  checkout
+  checkout,
+  review
 })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -25,5 +28,6 @@ export default store
 export * from './user'
 export * from './babies'
 export * from './cart'
+export * from './review'
 export * from './order'
 export * from './checkout'
