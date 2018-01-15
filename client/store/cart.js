@@ -6,6 +6,7 @@ import history from '../history'
  */
 const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const UPDATE_CART = 'UPDATE_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 
 /**
@@ -18,6 +19,7 @@ const defaultCart = []
  */
 const getCart = cart => ({type: GET_CART, cart})
 const addToCart = item => ({type: ADD_TO_CART, item})
+const updateCart = item => ({type: UPDATE_CART, item})
 const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
 
 /**
@@ -26,37 +28,27 @@ const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
 export const getInitialCartThunk = () =>
   dispatch =>
   axios.get('/api/cart')
-    // axios.get(`/api/orders`)
-    //   .then(allOrders => {
-    //     allOrders = allOrders.data
-    //     const currentOrder = allOrders.find(order => {
-    //       if (order.user.email === email && order.complete === false){
-    //         return order.lineItems
-    //       }
-    //     })
-    //     return currentOrder
-    //    // dispatch(getCart(currentOrder))
-    //   })
-    //   .then((currentOrder) => {
-    //     const databaseCartData = [];
-    //     currentOrder.lineItems.forEach((item) => {
-    //       const lineItemId = item.id
-    //       axios.get(`api/lineItems/${lineItemId}`)
-    //       .then((itemData) => {
-    //        databaseCartData.push(itemData.data)
-    //       })
-    //     })
-    //     dispatch(getCart(databaseCartData))
-    //   })
       .then(cart => dispatch(getCart(cart.data)))
       .catch(err => console.log(err))
 
-//---- only adds new item to session cart ---\\\
-export const addToCartSessionThunk = () =>
-  dispatch =>
-  axios.post('/api/cart/')
-  .then(newItem => dispatch(addToCart(newItem.data)))
-  .catch(err => console.log(err))
+
+//---- creates a new line item with the correct order id ---\\\
+export const addToCartThunk = (Item) =>
+    dispatch =>
+      axios.post('/api/lineItems', {price: Item.price, quantity: 1, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
+      .then(newItem => {
+        dispatch(addToCart(newItem.data))
+      })
+    .catch(err => console.log(err))
+
+export const updateCartThunk = (Item) =>
+      dispatch =>
+        axios.put('api/lineItems', {price: Item.price, quantity: 1, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
+        .then(updatedItem => {
+          console.log(updatedItem)
+          return dispatch(updateCart(updatedItem.data))
+        })
+        .catch(err => console.log(err))
 
 /**
  * REDUCER
@@ -65,8 +57,17 @@ export default function (state = defaultCart, action) {
   switch (action.type) {
     case GET_CART:
       return action.cart
-    case ADD_TO_CART: //think about checking if beanie already is in cart
-      return [...state.cart, action.item]
+    case ADD_TO_CART:
+      return [...state, action.item]
+    case UPDATE_CART:
+      return state.map(elem => {
+        if (elem.id === action.item.id){
+          return action.item
+        }
+        else {
+          return elem
+        }
+      })
     case REMOVE_FROM_CART:
       return [...state.slice(0, state.indexOf(action.item)), ...state.slice(state.indexOf(action.item) + 1)]
     default:

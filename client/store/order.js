@@ -14,7 +14,7 @@ const defaultOrder = {}
 /**
  * ACTION CREATORS
  */
-const getCurrentOrder = (orderId) => ({type: GET_CURRENT_ORDER, orderId})
+const getCurrentOrder = (order) => ({type: GET_CURRENT_ORDER, order})
 
 
 /**
@@ -25,9 +25,9 @@ export const getCurrentOrderThunk = () =>
   axios.get('/api/orders')
   .then(allOrders => {
     const incompleteOrder = allOrders.data.find(elem => !elem.complete)
-    return incompleteOrder.id
+    return incompleteOrder
   })
-  .then(incompleteOrderId => dispatch(getCurrentOrder(incompleteOrderId)))
+  .then(incompleteOrder => dispatch(getCurrentOrder(incompleteOrder)))
   .catch(err => console.log(err))
 
 /**
@@ -36,7 +36,7 @@ export const getCurrentOrderThunk = () =>
 export default function (state = defaultOrder, action) {
     switch (action.type) {
       case GET_CURRENT_ORDER:
-        return action.orderId
+        return action.order
       default:
         return state
     }
