@@ -34,6 +34,7 @@ export const review = (props) => {
                     <div key={review.id}>
                        <h4>Stars: { review.rating } </h4>
                        {/* <p>{this.Baby.reviews</p> */}
+                       <p>TEXT: {review.text}</p>
                     </div>
                 )
             })}</div>

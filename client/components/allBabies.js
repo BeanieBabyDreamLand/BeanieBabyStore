@@ -21,7 +21,7 @@ function mapDispatchProps(dispatch){
       }
     },
     handleSubmit (evt){
-      console.log('SUBMIT',evt)
+      console.log('SUBMIT', evt)
     },
     handleSubmitSearch (evt){
       evt.preventDefault()
