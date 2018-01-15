@@ -42,8 +42,8 @@ async function seed () {
   ])
   const reviews = await Promise.all([
     Review.create({rating: 5, text: `This is a SWEET beanie baby!!!!!!! should have bought more back in '95 when he came out.......will never regret this purchase tho`, babyId: 1, userId: 2}),
-    Review.create({rating: 1, text: `pretty unrealistic that a moose could eat chocolate (dogs cant digest it)...... would NOT purchase again ...try again TY`, babyId: 2, userId: 1}),
-    Review.create({rating: 5, text: 'Patti the Platypus will be my bride. We are extremely happy together and I CANNOT wait to start the rest of our lives :`)', babyId: 3, userId: 3})
+    Review.create({rating: 1, text: `pretty unrealistic that a moose could eat chocolate (dogs cant digest it)...... would NOT purchase again ...try again TY`, babyId: 3, userId: 1}),
+    Review.create({rating: 5, text: 'Patti the Platypus will be my bride. We are extremely happy together and I CANNOT wait to start the rest of our lives :`)', babyId: 2, userId: 3})
   ])
   // Wowzers! We can even `await` on the right-hand side of the assignment operator
   // and store the result that the promise resolves to in a variable! This is nice!
