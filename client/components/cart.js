@@ -5,15 +5,15 @@ import { withRouter, Link } from 'react-router-dom'
 /* Component */
 
 const Cart = (props) => {
-    console.log(props)
+    console.log('cart is ', props.cart)
     return (
         <div>
             {props.cart.map((item) => {
                 return (
                     <ul key={item.id}>
                         <li >{item.baby.name}</li>
-                        <li >{item.baby.poem}</li>
-                        <li ><img src={item.baby.imageUrl} /></li>
+                        <li >Price: {item.price}</li>
+                        <li >Quantity: {item.quantity}</li>
                     </ul>
                 )
             })}
