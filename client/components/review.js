@@ -16,11 +16,10 @@ function mapDispatchProps(dispatch){
             dispatch(fetchOneBaby(this.req.params.id))
         },
         handleReviewSubmit (evt) {
-            evt.preventDefault()
             const rating = evt.target.rating.value
             const text = evt.target.description.value
-            const userId = evt.target.userId.value
-            const babyId = evt.target.babyId.value
+            const userId = store.getState().user.id
+            const babyId = store.getState().babies.id
             dispatch(postReview({rating, text, babyId, userId}))
         }
 
@@ -29,16 +28,8 @@ function mapDispatchProps(dispatch){
 
 export const review = (props) => {
 
-
     const {isLoggedIn} = props
-    console.log('props', props.babies, props.match.params)
-    // let users = props.users
-    // console.log('users', users)
     let thisBaby = props.babies
-    let user = props.user.id
-    let baby = thisBaby.id
-    console.log('BABYID: ', thisBaby.id)
-    console.log('USERID: ', props.user.id)
 
     return (
         <div>
@@ -77,14 +68,6 @@ export const review = (props) => {
                         name="description"
                         type="text"
                         placeholder="Enter Your Review" />
-                    <input
-                        name="userId"
-                        type="text"
-                        value={user} />
-                    <input
-                        name="babyId"
-                        type="text"
-                        value={baby} />
                     <button type="submit">Add Review</button>
                 </form>
             </div>

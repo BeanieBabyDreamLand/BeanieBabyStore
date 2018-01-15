@@ -17,13 +17,13 @@ const defaultReviews = []
  * ACTION CREATORS
  */
 
-const addReview = review => ({type: ADD_REVIEW, review})
 const getReviews = reviews => ({type: GET_REVIEWS, reviews})
+const addReview = review => ({type: ADD_REVIEW, review})
 
 /**
  * THUNK CREATORS
  */
-export const getReviewsThunk = () =>
+export const fetchReviews = () =>
   dispatch =>
     axios.get('/api/reviews')
       .then(res =>
@@ -38,7 +38,7 @@ export const postReview = (review) =>
     axios.post('/api/reviews', review)
       .then(res => res.data)
       .then(newReview => {
-        dispatch(addReview(newReview))
+        dispatch(getReviews(newReview))
       })
       .catch(err => console.log(err))
 
@@ -49,7 +49,7 @@ export const postReview = (review) =>
 export default function (state = defaultReviews, action) {
   switch (action.type) {
     case ADD_REVIEW:
-      return action.reviews
+      return [...state.reviews, action.review]
     case GET_REVIEWS:
       return action.reviews
     default:
