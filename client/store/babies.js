@@ -60,7 +60,6 @@ export const getSearchResults = (searchWord) =>
         searchWord.toLowerCase()
         const allbabies = res.data
         const filteredBabies = allbabies.filter(baby => baby.name.toLowerCase().includes(searchWord) || baby.poem.toLowerCase().includes(searchWord))
-        console.log(filteredBabies)
         return dispatch(getBabyBySearch(filteredBabies))
       })
       .catch(err => console.log(err))

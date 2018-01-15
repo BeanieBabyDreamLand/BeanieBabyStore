@@ -5,7 +5,6 @@ import { withRouter, Link } from 'react-router-dom'
 /* Component */
 
 const Cart = (props) => {
-    console.log('cart is ', props.cart)
     return (
         <div>
             {props.cart.map((item) => {
