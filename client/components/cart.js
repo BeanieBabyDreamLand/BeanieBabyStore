@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import store, {completeOrderThunk, getCurrentOrderThunk} from '../store'
 
 /* Component */
 
 const Cart = (props) => {
     console.log('cart is ', props.cart)
+    const orderId = props.order.id
+    console.log('ORDER ID IS ', orderId)
     return (
         <div>
             {props.cart.map((item) => {
@@ -17,6 +20,7 @@ const Cart = (props) => {
                     </ul>
                 )
             })}
+        <button onClick={(evt) => props.checkout(evt, orderId)}>Checkout</button>
         </div>
     )
 }
@@ -25,12 +29,21 @@ const Cart = (props) => {
 
 const mapState = (state) => {
     return {
-        cart: state.cart
+        cart: state.cart,
+        order: state.order
     }
 }
 
-// const mapDispatch = (dispatch) => {
-//     return dispatch()
-// }
+const mapDispatch = (dispatch) => {
+  //what is orderId ????
+    return {
+      checkout (evt, orderId){
+        evt.preventDefault()
+        dispatch(getCurrentOrderThunk())
+        dispatch(completeOrderThunk(orderId))
+      }
+    }
+}
 
-export default withRouter(connect(mapState)(Cart))
+const cartContainer = connect(mapState, mapDispatch)(Cart)
+export default withRouter(cartContainer)
