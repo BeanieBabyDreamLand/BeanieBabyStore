@@ -12,15 +12,15 @@ const AuthForm = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
-      {props.name==='signup' && 
+      {props.name === 'signup' && 
         (<div>
           <div>
-          <label htmlFor="firstName"><small>First Name</small></label>
-          <input name="firstName" type="string" />
+          <label htmlFor="firstname"><small>First Name</small></label>
+          <input name="firstname" type="string" />
         </div>
         <div>
-          <label htmlFor="lastName"><small>Last Name</small></label>
-          <input name="lastName" type="string" />
+          <label htmlFor="lastname"><small>Last Name</small></label>
+          <input name="lastname" type="string" />
         </div>
         </div>)
         }
@@ -70,21 +70,22 @@ const mapDispatch = (dispatch) => {
     handleSubmit (evt) {
       evt.preventDefault()
       const formName = evt.target.name
-      //const firstName = evt.target.firstName.value
-      //const lastName = evt.target.lastName.value
+      const firstname = evt.target.firstname.value
+      const lastname = evt.target.lastname.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      //if (firstName && lastName) {
-      //   dispatch(auth( firstName, lastName, email, password, formName  ))
-      //   .then(() => {
-      //     dispatch(getInitialCartThunk())
-      //   })
-      // } else {
+      if (firstname && lastname) {
+        dispatch(auth( firstname, lastname, email, password, formName  ))
+        .then(() => {
+          dispatch(getInitialCartThunk())
+        })
+      } 
+      if (!firstname || !lastname) {
         dispatch(auth( email, password, formName  ))
         .then(() => {
           dispatch(getInitialCartThunk())
         })
-      //}
+      }
       
     }
   }
