@@ -23,7 +23,7 @@ const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
 /**
  * THUNK CREATORS
  */
-export const getInitialCartThunk = (email) =>
+export const getInitialCartThunk = () =>
   dispatch =>
   axios.get('/api/cart')
     // axios.get(`/api/orders`)
@@ -51,6 +51,12 @@ export const getInitialCartThunk = (email) =>
       .then(cart => dispatch(getCart(cart.data)))
       .catch(err => console.log(err))
 
+//---- only adds new item to session cart ---\\\
+export const addToCartSessionThunk = () =>
+  dispatch =>
+  axios.post('/api/cart/')
+  .then(newItem => dispatch(addToCart(newItem.data)))
+  .catch(err => console.log(err))
 
 /**
  * REDUCER

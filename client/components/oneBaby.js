@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {babiesThunk, fetchOneBaby} from '../store'
 import { Review } from './index'
+import { getCurrentOrderThunk } from '../store/order';
 
 function mapStateProps(state){
     return {
@@ -57,14 +58,17 @@ function mapStateProps(state){
 
               <button type="submit" onClick={(evt) => {
                 let updateCart = false
+                //this.props.cart is the cart on the state not session
+                //---if this baby is already in the cart ---\\
                 this.props.cart.forEach(lineItem => {
                   if (lineItem.babyId === baby.id){
                     updateCart = true
                   }
                 })
                 let func = (updateCart) ? this.props.updateCart : this.props.createLineItem
-                func(evt)
-               // this.props.handleSubmit(evt, baby)
+                //func(evt)
+                //for testing:
+                this.props.createLineItem(evt)
 
                 }}>Add To Cart</button>
 
