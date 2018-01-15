@@ -5,7 +5,9 @@ import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults, addT
 
 function mapStateProps(state){
   return {
-    babies: state.babies
+    babies: state.babies,
+    cart: state.cart,
+    user: state.user
   }
 }
 function mapDispatchProps(dispatch){
@@ -92,8 +94,8 @@ export const allBabies = (props) => {
                 <div>
                   <button type="submit" onClick={(evt) => {
                     let updateCart = false, lineItemId
+                    console.log(props)
                     this.props.cart.forEach(lineItem => {
-                      console.log(this)
                       if (lineItem.babyId === baby.id){
                         updateCart = true
                         lineItemId = lineItem.id
