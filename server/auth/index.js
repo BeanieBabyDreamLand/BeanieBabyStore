@@ -38,6 +38,7 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
+  console.log(req.user)
   User.findOne({
     where: {id: req.user.id},
     attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],

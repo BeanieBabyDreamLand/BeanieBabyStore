@@ -12,6 +12,18 @@ const AuthForm = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
+      {props.name==='signup' && 
+        (<div>
+          <div>
+          <label htmlFor="firstName"><small>First Name</small></label>
+          <input name="firstName" type="string" />
+        </div>
+        <div>
+          <label htmlFor="lastName"><small>Last Name</small></label>
+          <input name="lastName" type="string" />
+        </div>
+        </div>)
+        }
         <div>
           <label htmlFor="email"><small>Email</small></label>
           <input name="email" type="text" />
@@ -58,12 +70,22 @@ const mapDispatch = (dispatch) => {
     handleSubmit (evt) {
       evt.preventDefault()
       const formName = evt.target.name
+      //const firstName = evt.target.firstName.value
+      //const lastName = evt.target.lastName.value
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
-      .then(() => {
-        dispatch(getInitialCartThunk())
-      })
+      //if (firstName && lastName) {
+      //   dispatch(auth( firstName, lastName, email, password, formName  ))
+      //   .then(() => {
+      //     dispatch(getInitialCartThunk())
+      //   })
+      // } else {
+        dispatch(auth( email, password, formName  ))
+        .then(() => {
+          dispatch(getInitialCartThunk())
+        })
+      //}
+      
     }
   }
 }
