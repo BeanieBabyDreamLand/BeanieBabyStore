@@ -1,11 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults} from '../store'
+import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults, addToCartThunk, updateCartThunk, getInitialCartThunk} from '../store'
 
 function mapStateProps(state){
   return {
-    babies: state.babies
+    babies: state.babies,
+    cart: state.cart,
+    user: state.user
   }
 }
 function mapDispatchProps(dispatch){
@@ -20,8 +22,22 @@ function mapDispatchProps(dispatch){
         return dispatch(getBabyCategory(evt.target.value))
       }
     },
-    handleSubmit (evt){
-      console.log('SUBMIT', evt)
+    updateCart (evt, lineItemId){
+      evt.preventDefault()
+      const currentQuant = this.cart.find(elem => {
+        return elem.babyId === +this.match.params.id
+      }).quantity
+      dispatch(updateCartThunk({price: this.babies.price, quantity: currentQuant + 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}, lineItemId))
+      .then(() => {
+        dispatch(getInitialCartThunk())
+      })
+    },
+    createLineItem (evt){
+      evt.preventDefault()
+      dispatch(addToCartThunk({price: this.babies.price, quantity: 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}))
+      .then(() => {
+        dispatch(getInitialCartThunk())
+      })
     },
     handleSubmitSearch (evt){
       evt.preventDefault()
@@ -76,9 +92,22 @@ export const allBabies = (props) => {
               <div>
                 <Link to={`/products/${baby.id}`}  >{baby.name}</Link>
                 <div>
-                <form onSubmit={props.handleSubmit}>
-                  <button type="submit" >Add To Cart</button>
-                </form>
+                  <button type="submit" onClick={(evt) => {
+                    let updateCart = false, lineItemId
+                    console.log(props)
+                    this.props.cart.forEach(lineItem => {
+                      if (lineItem.babyId === baby.id){
+                        updateCart = true
+                        lineItemId = lineItem.id
+                      }
+                    })
+                    if (updateCart){
+                      this.props.updateCart(evt, lineItemId)
+                    }
+                    else {
+                      this.props.createLineItem(evt)
+                    }
+                  }}>Add To Cart</button>
               </div>
                 <img src={ baby.imageUrl } />
               </div>
