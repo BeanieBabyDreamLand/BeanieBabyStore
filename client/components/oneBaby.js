@@ -19,15 +19,16 @@ function mapStateProps(state){
       },
       updateCart (evt, lineItemId){
         evt.preventDefault()
-        console.log('CALLING UPDATE CART')
         const currentQuant = this.cart.find(elem => {
           return elem.babyId === +this.match.params.id
         }).quantity
         dispatch(updateCartThunk({price: this.babies.price, quantity: currentQuant + 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}, lineItemId))
+        .then(() => {
+          dispatch(getInitialCartThunk())
+        })
       },
       createLineItem (evt){
         evt.preventDefault()
-        console.log('CREATING LINE ITEM')
         dispatch(addToCartThunk({price: this.babies.price, quantity: 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}))
         .then(() => {
           dispatch(getInitialCartThunk())
@@ -52,7 +53,6 @@ function mapStateProps(state){
     }
 
     render(){
-      console.log('is this one baby????', this.props)
       const baby = this.props.babies
 
         return (
@@ -66,9 +66,8 @@ function mapStateProps(state){
             <h5>This baby is {baby.category}</h5>
 
               <button type="submit" onClick={(evt) => {
-                let updateCart = false, lineItemId;
-                //this.props.cart is the cart on the state not session
-                //---if this baby is already in the cart ---\\
+                let updateCart = false, lineItemId
+        //---Test if this baby is already in the cart ---\\
                 this.props.cart.forEach(lineItem => {
                   if (lineItem.babyId === baby.id){
                     updateCart = true
@@ -78,12 +77,8 @@ function mapStateProps(state){
                 if (updateCart){
                 this.props.updateCart(evt, lineItemId)
                 }
-                else { this.props.createLineItem(evt)}
-                  
-                //func(evt)
-                //for testing:
-                //this.props.updateCart(evt, lineItemId)
-
+                else { 
+                this.props.createLineItem(evt)}
                 }}>Add To Cart</button>
 
             <Review props={this.props}/>

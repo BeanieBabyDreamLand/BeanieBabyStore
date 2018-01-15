@@ -41,12 +41,12 @@ export const addToCartThunk = (Item) =>
       })
     .catch(err => console.log(err))
 
+//---- updates a line item with the new quantitiy ---\\
 export const updateCartThunk = (Item, lineItemId) => {
   return (dispatch) => {
-    return axios.put(`api/lineItems/${lineItemId}`, {price: Item.price, quantity: 1, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
+    return axios.put(`/api/lineItems/${lineItemId}`, {price: Item.price, quantity: Item.quantity, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
     .then(updatedItem => {
-      console.log('data from the put: ', updatedItem)
-      return dispatch(updateCart(updatedItem))
+      return dispatch(updateCart(updatedItem.data))
     })
     .catch(err => console.log(err))
   }
