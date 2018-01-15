@@ -19,9 +19,9 @@ async function seed () {
   // executed until that promise resolves!
 
   const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123', firstname: 'Cody', lastname: 'Kelly', isAdmin: true}),
-    User.create({email: 'rachel@email.com', password: '123', firstname: 'Rachel', lastname: 'Arkebauer', isAdmin: false}),
-    User.create({email: 'appropriateilana@email.com', password: 'yassss', firstname: 'Ilana', lastname: 'Wexler', isAdmin: false})
+    User.create({email: 'cody@email.com', password: '123', firstname: 'Cody', lastname: 'Kelly', isAdmin: true, stripeId: 'cus_C8tqXOgaefLOHX'}),
+    User.create({email: 'rachel@email.com', password: '123', firstname: 'Rachel', lastname: 'Arkebauer', isAdmin: false, stripeId: 'cus_C8trAFnmUpFir8'}),
+    User.create({email: 'appropriateilana@email.com', password: 'yassss', firstname: 'Ilana', lastname: 'Wexler', isAdmin: false, stripeId: 'cus_C8ts1p8NQBXT7f'})
   ])
   const babies = await Promise.all([
     Baby.create({name: 'Derby', poem: `All the other horses used to tattle \n Because Derby never wore his saddle \n

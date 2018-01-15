@@ -58,7 +58,7 @@ const createApp = () => {
   // //put the cart on the session
   // app.get('/api/cart')
   // app.use((req,res,next)=> {
-  //   console.log(req.session) 
+  //   console.log(req.session)
   //   next()})
 
   // static file-serving middleware

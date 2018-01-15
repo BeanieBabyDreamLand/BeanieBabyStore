@@ -20,6 +20,9 @@ const User = db.define('user', {
   googleId: {
     type: Sequelize.STRING
   },
+  stripeId: {
+    type: Sequelize.STRING
+  },
   firstname: {
     type: Sequelize.STRING,
     allowNull: false
