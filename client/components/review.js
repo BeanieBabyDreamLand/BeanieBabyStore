@@ -51,12 +51,8 @@ export const review = (props) => {
 
         <div>
         {
-          isLoggedIn
+         (props.user.id)
             ? <div>
-              {/* the message will render if user is not logged in */}
-              <h1>Please Log In to Add A Review</h1>
-            </div>
-            : <div >
               {/* The form will render if user is logged in */}
               <h3>Add Your Own Review for {thisBaby.name}</h3>
                 <form onSubmit={props.handleReviewSubmit} name="newReview">
@@ -71,6 +67,11 @@ export const review = (props) => {
                     <button type="submit">Add Review</button>
                 </form>
             </div>
+            : <div >
+                {/* the message will render if user is not logged in */}
+              <h1>Please Log In to Add A Review</h1>
+            </div>
+
         }
         </div>
 
