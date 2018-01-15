@@ -62,7 +62,7 @@ const mapDispatch = (dispatch) => {
       const password = evt.target.password.value
       dispatch(auth(email, password, formName))
       .then(() => {
-        dispatch(getInitialCartThunk(email))
+        dispatch(getInitialCartThunk())
       })
     }
   }

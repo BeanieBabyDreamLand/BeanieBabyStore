@@ -15,14 +15,26 @@ router.param('orderId', (req, res, next, orderId) => {
     })
 })
 
-router.get('/', (req, res, next) => {
-  Order.findAll({
-      include: [{model: User,
-                  attributes: ['firstname', 'lastname', 'fullname', 'email']},
-                {model: LineItem}
-              ]
-  })
-    .then(orders => res.json(orders))
+// router.get('/', (req, res, next) => {
+//   Order.findAll({
+//       include: [{model: User,
+//                   attributes: ['firstname', 'lastname', 'fullname', 'email']},
+//                 {model: LineItem}
+//               ]
+//   })
+//     .then(orders => res.json(orders))
+//     .catch(next)
+// })
+
+router.get('/', (req,res,next) => {
+    const userId = req.session.passport.user
+    console.log('userId: ', userId)
+    Order.findAll({
+        where: { userId: userId}
+    })
+    .then(allUsersOrders => {
+      res.json(allUsersOrders)
+    })
     .catch(next)
 })
 
