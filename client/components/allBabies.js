@@ -7,7 +7,8 @@ function mapStateProps(state){
   return {
     babies: state.babies,
     cart: state.cart,
-    user: state.user
+    user: state.user,
+    order: state.order
   }
 }
 function mapDispatchProps(dispatch){
@@ -17,31 +18,35 @@ function mapDispatchProps(dispatch){
     },
     handleChange (evt){
       evt.preventDefault()
-      console.log('CHANGE', evt)
       if (typeof (evt.target.value) === 'string') {
         return dispatch(getBabyCategory(evt.target.value))
       }
     },
-    updateCart (evt, lineItemId){
+    updateCart (evt, lineItemId, baby){
       evt.preventDefault()
+      const currentBaby = this.babies.find((elem) => {
+        return elem.id === baby.id
+      })
       const currentQuant = this.cart.find(elem => {
-        return elem.babyId === +this.match.params.id
+        return elem.babyId === +baby.id
       }).quantity
-      dispatch(updateCartThunk({price: this.babies.price, quantity: currentQuant + 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}, lineItemId))
+      dispatch(updateCartThunk({price: currentBaby.price, quantity: currentQuant + 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}, lineItemId))
       .then(() => {
         dispatch(getInitialCartThunk())
       })
     },
-    createLineItem (evt){
+    createLineItem (evt, baby){
       evt.preventDefault()
-      dispatch(addToCartThunk({price: this.babies.price, quantity: 1, userId: this.user.id, babyId: this.match.params.id, orderId: this.order.id}))
+      const currentBaby = this.babies.find((elem) => {
+        return elem.id === baby.id
+      })
+      return dispatch(addToCartThunk({price: currentBaby.price, quantity: 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}))
       .then(() => {
         dispatch(getInitialCartThunk())
       })
     },
     handleSubmitSearch (evt){
       evt.preventDefault()
-        console.log()
         const searchWord = evt.target.search.value
         return dispatch(getSearchResults(searchWord))
     },
@@ -93,19 +98,18 @@ export const allBabies = (props) => {
                 <Link to={`/products/${baby.id}`}  >{baby.name}</Link>
                 <div>
                   <button type="submit" onClick={(evt) => {
-                    let updateCart = false, lineItemId
-                    console.log(props)
-                    this.props.cart.forEach(lineItem => {
+                    let updateCart = false, lineItemId;
+                    props.cart.forEach(lineItem => {
                       if (lineItem.babyId === baby.id){
                         updateCart = true
                         lineItemId = lineItem.id
                       }
                     })
                     if (updateCart){
-                      this.props.updateCart(evt, lineItemId)
+                      props.updateCart(evt, lineItemId, baby)
                     }
                     else {
-                      this.props.createLineItem(evt)
+                      props.createLineItem(evt, baby)
                     }
                   }}>Add To Cart</button>
               </div>

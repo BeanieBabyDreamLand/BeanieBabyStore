@@ -6,9 +6,9 @@ import store, {completeOrderThunk, getCurrentOrderThunk} from '../store'
 /* Component */
 
 const Cart = (props) => {
-    console.log('cart is ', props.cart)
+
     const orderId = props.order.id
-    console.log('ORDER ID IS ', orderId)
+
     return (
         <div>
             {props.cart.map((item) => {

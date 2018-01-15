@@ -62,11 +62,10 @@ router.put('/:lineItemId', (req, res, next) => {
 
 // ---- remove from cart ---- \\
 router.delete('/:lineItemId', (req, res, next) => {
-    let cart = req.session.cart
+    let cart = req.session.cart, newCart
     LineItem.findOne({where: {id: req.params.lineItemId}})
     .then(itemToRemove => {
        newCart = cart.filter(elem => {
-           console.log(elem.id)
            return elem.id !== itemToRemove.id
        })
        cart = newCart

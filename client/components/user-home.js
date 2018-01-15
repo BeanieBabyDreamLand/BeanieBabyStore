@@ -12,7 +12,6 @@ export const UserHome = (props) => {
 
   return (
     <div>
-    {/*console.log('!!! USER HOME PROPS',props)*/}
       <h3>Welcome, {user.firstname}</h3>
       <br />
       <h5 id="orderTitle">Orders:</h5>

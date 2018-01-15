@@ -35,7 +35,6 @@ export const review = (props) => {
         <div>
         <h3>Reviews and high praise for {thisBaby.name}</h3>
         {thisBaby && thisBaby.reviews &&
-            //console.log('this baby review',thisBaby.reviews[0])
             <div>{thisBaby.reviews.map(review => {
                 return (
                     <div key={review.id}>
