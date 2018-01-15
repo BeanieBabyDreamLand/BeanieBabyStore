@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, cart, getInitialCartThunk} from '../store'
+import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from '../store'
 
 /**
  * COMPONENT
@@ -61,7 +61,8 @@ const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -75,9 +76,15 @@ const mapDispatch = (dispatch) => {
       const email = evt.target.email.value
       const password = evt.target.password.value
       if (firstname && lastname) {
-        dispatch(auth( firstname, lastname, email, password, formName  ))
+        dispatch(auth( firstname, lastname, email, password, formName  )) //signs up and makes a user
         .then(() => {
-          dispatch(getInitialCartThunk())
+          dispatch(me()) //put the user on the state
+        })
+        .then(() => {
+         dispatch(createNewIncompleteOrderThunk())
+        })
+        .then(() => {
+         dispatch(getInitialCartThunk())
         })
       } 
       if (!firstname || !lastname) {
