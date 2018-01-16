@@ -65,6 +65,13 @@ export const completeOrderThunk = (orderId, total) =>
   })
   .catch(err => console.log(err))
 
+export const deleteLineItemThunk = (lineItem, lineItemId) =>
+dispatch =>
+axios.delete(`/api/cart/${lineItemId}`)
+.then(() => {
+    dispatch(removeFromCart(lineItem))
+  })
+  .catch(err => console.log(err))
 
 /**
  * REDUCER
