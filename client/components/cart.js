@@ -2,14 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
-
-import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
-
-/* Component */
-
-
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk} from '../store'
 import {ToastContainer, ToastStore} from 'react-toasts'
+
+/* Component */
 
 const calculateTotal = (arr) => {
   let sum = 0
@@ -31,7 +27,7 @@ export class Cart extends Component {
 
         console.log('CART COMPONENT ORDER ID', orderId)
         return (
-            
+
             <div className="cart-container">
             <ToastContainer store={ToastStore} />
 
@@ -48,7 +44,7 @@ export class Cart extends Component {
                                 <li >Price: {item.price}</li>
                                 <li >Quantity: {item.quantity}</li>
                                 <li>Subtotal: {item.price * item.quantity}</li>
-                                <button className="btn btn-danger" 
+                                <button className="btn btn-danger"
                                         onClick={(evt, lineItem, lineItemId) => {
                                             this.props.deleteItem(evt, item, item.id)
                                             ToastStore.success('Deleted From Cart')
@@ -61,11 +57,6 @@ export class Cart extends Component {
                         : <div>
                         <h4>Your Cart is Empty</h4>
                           </div>
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 62e7191871f1f8386ce2dd45fb54bf97574c8e16
                 }
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => {
