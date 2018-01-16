@@ -16,6 +16,7 @@ export class UserHome extends Component {
   
   render () {
     const {user} = this.props
+    let track = 0;
     return (
       <div>
         <h3>Welcome, {user.firstname}</h3>
@@ -24,8 +25,19 @@ export class UserHome extends Component {
         {user.orders && 
         <ul id="orderList">
           {user.orders.map(order => {
-            console.log('mapping order', order)
-            return (<li key = {order.id}>Order #{order.id} ordered at {order.orderedAt}</li>)
+            if (order.complete === true){
+              track++;
+              return (
+                <li key = {order.id}>
+                  Order #{order.id} ordered at {order.orderedAt}
+                </li>
+              )
+            }
+            if (track === 0) {
+              return (
+                <p key = "noOrders">No past orders to show</p>
+              )
+            }
           }
           )}
         </ul>
@@ -48,10 +60,10 @@ export class UserHome extends Component {
             )}
           </ul>
           }
-          {!user.reviews &&
-          <div>
+          {(!user.reviews || user.reviews.length === 0) &&
+          <ul>
             <p>No past reviews to show</p>
-          </div>
+          </ul>
           }
       </div>
     )
