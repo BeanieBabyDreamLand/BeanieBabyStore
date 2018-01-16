@@ -30,7 +30,10 @@ router.get('/', (req,res,next) => {
     const userId = req.session.passport.user
     console.log('userId: ', userId)
     Order.findAll({
-        where: { userId: userId}
+        where: { userId: userId},
+        include: [{ model: User,
+          attributes: ['firstname', 'lastname', 'fullname', 'email']},
+        {model: LineItem}]
     })
     .then(allUsersOrders => {
       res.json(allUsersOrders)

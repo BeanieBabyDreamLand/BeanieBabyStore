@@ -2,13 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
-<<<<<<< HEAD
+
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
 
 /* Component */
-=======
+
+
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk} from '../store'
->>>>>>> 954818a8ef633a4a227cb84792014acbad1c96df
 
 const calculateTotal = (arr) => {
   let sum = 0
@@ -29,7 +29,6 @@ export class Cart extends Component {
         const orderId = this.props.order.id, userId = this.props.user.id
 
         console.log('CART COMPONENT ORDER ID', orderId)
-        console.log('length: ', this.props.cart.length)
         return (
             <div className="cart-container">
 
@@ -48,11 +47,18 @@ export class Cart extends Component {
                                 <li>Subtotal: {item.price * item.quantity}</li>
                                 <button className="btn btn-danger" onClick={(evt, lineItem, lineItemId) => this.props.deleteItem(evt, item, item.id)}>X</button>
                             </ul>
+                        )})}
+                        </div>
 
-                    )
-                })}
+                        : <div>
+                        <h4>Your Cart is Empty</h4>
+                          </div>
+
+
+                }
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
+
             </div>
         )
     }

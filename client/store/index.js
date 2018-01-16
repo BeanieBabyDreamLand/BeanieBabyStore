@@ -8,7 +8,7 @@ import cart from './cart'
 import review from './review'
 import order from './order'
 import reviewInput from './reviewInput'
-
+import allOrders from './allOrders'
 
 const reducer = combineReducers({
   user,
@@ -16,7 +16,8 @@ const reducer = combineReducers({
   cart,
   order,
   review,
-  reviewInput
+  reviewInput,
+  allOrders
 })
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
@@ -31,4 +32,5 @@ export * from './cart'
 export * from './review'
 export * from './order'
 export * from './reviewInput'
+export * from './allOrders'
 
