@@ -23,7 +23,6 @@ function mapDispatchProps(dispatch){
             const text = evt.target.description.value
             const userId = store.getState().user.id
             const babyId = store.getState().babies.id
-            console.log('evt: ', rating, text, userId, babyId)
             dispatch(postReview({rating, text, babyId, userId}))
         },
         handleChange (evt) {
@@ -33,10 +32,10 @@ function mapDispatchProps(dispatch){
 }
 export class review extends Component {
 
-    componentWillMount () {
-        const fetchBabies = babiesThunk()
-        store.dispatch(fetchBabies)
-    }
+    // componentWillMount () {
+    //     const fetchBabies = babiesThunk()
+    //     store.dispatch(fetchBabies)
+    // }
     // componentDidMount(){
     //     const fetchBabies = babiesThunk()
     //     store.dispatch(fetchBabies)

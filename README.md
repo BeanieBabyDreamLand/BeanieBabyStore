@@ -36,7 +36,7 @@ npm run test
 ```
 ## Deployment
 
-[Deployed App]()
+[Deployed App](http://beanie-baby-store.herokuapp.com/)
 
 ## Built With
 
