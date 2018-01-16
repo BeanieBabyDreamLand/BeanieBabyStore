@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import store, {completeOrderThunk, getCurrentOrderThunk} from '../store'
+import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
 
 /* Component */
 
+
 const Cart = (props) => {
-
     const orderId = props.order.id
-
     return (
         <div>
             {props.cart.map((item) => {
@@ -35,12 +34,12 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
-  //what is orderId ????
     return {
       checkout (evt, orderId){
         evt.preventDefault()
         dispatch(getCurrentOrderThunk())
         dispatch(completeOrderThunk(orderId))
+        dispatch(createNewIncompleteOrderThunk())
       }
     }
 }
