@@ -5,6 +5,7 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 import Home from './home'
 import AllBabies from './allBabies'
+import Toast from './toast'
 
 /**
  * COMPONENT
@@ -13,7 +14,7 @@ import AllBabies from './allBabies'
  *  rendered out by the component's `children`.
  */
 const Main = (props) => {
-  const {children, handleClick, isLoggedIn} = props
+  const {children, handleClick, isLoggedIn, message} = props
   return (
     <div>
       <nav className = "navbar navbar-expand-md navbar-light">
@@ -34,11 +35,11 @@ const Main = (props) => {
               <Link to="/cart">My Cart</Link>
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
-              
+
             </div>
         }
       </nav>
-      {/* {children}  this is where the email and password login form is currently located*/}
+      <Toast message={message} visible={false} />
       {children}
       <hr />
     </div>
@@ -50,7 +51,9 @@ const Main = (props) => {
  */
 const mapState = (state) => {
   return {
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    message: '',
+    visable: false
   }
 }
 
@@ -72,5 +75,6 @@ export default withRouter(connect(mapState, mapDispatch)(Main))
 Main.propTypes = {
   children: PropTypes.object,
   handleClick: PropTypes.func.isRequired,
-  isLoggedIn: PropTypes.bool.isRequired
+  isLoggedIn: PropTypes.bool.isRequired,
+  message: PropTypes.string
 }

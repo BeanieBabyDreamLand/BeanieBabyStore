@@ -5,10 +5,12 @@ import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrde
 
 /* Component */
 
-const Cart = (props) => {
 
+const Cart = (props) => {
     const orderId = props.order.id
+
     console.log('CART COMPONENT ORDER ID', orderId)
+
     return (
         <div>
             {props.cart.map((item) => {
@@ -35,7 +37,6 @@ const mapState = (state) => {
 }
 
 const mapDispatch = (dispatch) => {
-  //what is orderId ????
     return {
       checkout (evt, orderId){
         console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
