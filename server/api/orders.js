@@ -68,6 +68,7 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:orderId', (req, res, next) => {
+  console.log('REQ.BODY is ', req.body)
   Order.update(
     req.body,
     {

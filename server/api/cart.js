@@ -60,13 +60,16 @@ router.put('/:lineItemId', (req, res, next) => {
 // ---- remove from cart ---- \\
 router.delete('/:lineItemId', (req, res, next) => {
     let cart = req.session.cart, newCart
-    LineItem.findOne({where: {id: req.params.lineItemId}})
-    .then(itemToRemove => {
-       newCart = cart.filter(elem => {
-           return elem.id !== itemToRemove.id
-       })
-       cart = newCart
-       res.send(cart)
+    LineItem.destroy({where: {id: req.params.lineItemId}})
+    // .then(itemToRemove => {
+    //    newCart = cart.filter(elem => {
+    //        return elem.id !== itemToRemove.id
+    //    })
+    //    cart = newCart
+    //    res.send(cart)
+    // })
+    .then(() => {
+        res.send("Beanie sent back to the farm :)")
     })
     .catch(next)
 })
