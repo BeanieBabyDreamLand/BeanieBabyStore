@@ -114,7 +114,7 @@ export const allBabies = (props) => {
                     }
                   }}>Add To Cart</button>
               </div>
-                <img src={ baby.imageUrl } />
+                <img className="product-page-img" src={ baby.imageUrl } />
               </div>
               <br />
             </div>

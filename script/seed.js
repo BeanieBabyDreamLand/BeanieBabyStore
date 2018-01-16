@@ -24,10 +24,10 @@ async function seed () {
     User.create({email: 'appropriateilana@email.com', password: 'yassss', firstname: 'Ilana', lastname: 'Wexler', isAdmin: false, stripeId: 'cus_C8ts1p8NQBXT7f'})
   ])
   const babies = await Promise.all([
-    Baby.create({name: 'Derby', poem: `All the other horses used to tattle \n Because Derby never wore his saddle \n
+    Baby.create({name: 'Derby', poem: `\n All the other horses used to tattle \n Because Derby never wore his saddle \n
     He left the stables, and the horses too \n Just so Derby can be with you!`, price: 9000.00, inventory_qty: 2, category: 'unicorn'}),
-    Baby.create({name: 'Chocolate the Moose', poem: `Licorice, gum and peppermint candy \n This moose always has these handy \n There is one more thing he likes to eat \n Can you guess his favourite sweet?`, price: 1000.00, inventory_qty: 7, category: 'rare'}),
-    Baby.create({name: 'Patti the Platypus', poem: `Ran into Patti one day while walking \n Believe me she wouldn’t stop talking \n
+    Baby.create({name: 'Chocolate the Moose', poem: `\n Licorice, gum and peppermint candy \n This moose always has these handy \n There is one more thing he likes to eat \n Can you guess his favourite sweet?`, price: 1000.00, inventory_qty: 7, category: 'rare'}),
+    Baby.create({name: 'Patti the Platypus', poem: `\n Ran into Patti one day while walking \n Believe me she wouldn’t stop talking \n
     Listened and listened to her speak \n That would explain her extra large beak!`, price: 700.00, inventory_qty: 12, category: 'common'})
   ])
   const orders = await Promise.all([

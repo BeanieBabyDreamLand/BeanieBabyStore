@@ -49,6 +49,7 @@ export const review = (props) => {
         {/* add review form */}
 
         <div>
+        <br />
         {
          (props.user.id)
             ? <div>
