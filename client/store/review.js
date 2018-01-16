@@ -28,8 +28,7 @@ export const fetchReviews = () =>
   dispatch =>
     axios.get('/api/reviews')
       .then(res =>
-        dispatch(getReviews(res.data ||
-        defaultReviews)))
+        dispatch(getReviews(res.data || defaultReviews)))
       .catch(err => console.log(err))
 
 
@@ -38,7 +37,8 @@ export const postReview = (review) =>
     axios.post('/api/reviews', review)
       .then(res => res.data)
       .then(newReview => {
-        dispatch(getReviews(newReview))
+        console.log(newReview)
+        return dispatch(addReview(newReview))
       })
       .catch(err => console.log(err))
 
@@ -49,7 +49,8 @@ export const postReview = (review) =>
 export default function (state = defaultReviews, action) {
   switch (action.type) {
     case ADD_REVIEW:
-      return [...state.reviews, action.review]
+    return action.review
+      //return [...state.reviews, action.review]
     case GET_REVIEWS:
       return action.reviews
     default:

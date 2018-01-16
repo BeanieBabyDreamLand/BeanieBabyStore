@@ -87,3 +87,6 @@ form div {
   padding-top: 66.66%;
 }
 
+.react-toasts-container {
+  bottom: 0;
+}
