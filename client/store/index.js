@@ -18,6 +18,9 @@ const reducer = combineReducers({
   review,
   reviewInput
 })
+
+console.log("PROCESS.ENV: ", process)
+
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})

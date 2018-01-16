@@ -10,7 +10,7 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
-const socketio = require('socket.io')
+const socketio = require('socket.io') 
 module.exports = app
 
 /**
@@ -48,8 +48,12 @@ const createApp = () => {
     resave: false,
     saveUninitialized: false
   }))
+
+  console.log(process.env.NODE_ENV)
+
   app.use(passport.initialize())
   app.use(passport.session())
+
 
   // auth and api routes
   app.use('/auth', require('./auth'))
