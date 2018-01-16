@@ -48,9 +48,9 @@ export class Cart extends Component {
                         : <div>
                         <h4>Your Cart is Empty</h4>
                           </div>
-                    )
                     
-                })}
+                    
+                }
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
 
