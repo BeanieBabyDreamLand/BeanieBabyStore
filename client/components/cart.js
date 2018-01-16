@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import store, {completeOrderThunk, getCurrentOrderThunk} from '../store'
+import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
 
 /* Component */
 
 const Cart = (props) => {
 
     const orderId = props.order.id
-
+    console.log('CART COMPONENT ORDER ID', orderId)
     return (
         <div>
             {props.cart.map((item) => {
@@ -38,9 +38,11 @@ const mapDispatch = (dispatch) => {
   //what is orderId ????
     return {
       checkout (evt, orderId){
+        console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
         evt.preventDefault()
         dispatch(getCurrentOrderThunk())
         dispatch(completeOrderThunk(orderId))
+        dispatch(createNewIncompleteOrderThunk())
       }
     }
 }
