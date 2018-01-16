@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  background-color: rgb(255,173,194);
+  background-color: white
 }
 
 body, html{
@@ -41,6 +41,7 @@ nav{
   border-bottom-left-radius: .5em;
   border-bottom-right-radius: .5em;
   justify-content: flex-end;
+  opacity: .8;
 }
 
 
@@ -74,17 +75,27 @@ form div {
 }
 
 #clearButton {
-  padding-left: 1em
+  padding-left: 0em
 }
 
-#submit-btn {
-  margin-left: 1em
-}
+
 
 #beanie-baby {
   max-height: 3em;
   max-width: 4em;
   padding-top: 66.66%;
+}
+.beanie-baby {
+  text-align: center
+}
+.btn-light {
+  color: pink;
+  outline-color: pink;
+}
+
+a {
+  color: pink;
+  text-decoration: none;
 }
 
 .react-toasts-container {
