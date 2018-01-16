@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults, addToCartThunk, updateCartThunk, getInitialCartThunk} from '../store'
+import {ToastContainer, ToastStore} from 'react-toasts'
 
 function mapStateProps(state){
   return {
@@ -62,6 +63,7 @@ export const allBabies = (props) => {
     const babies = props.babies;
     return (
         <div className="container">
+        <ToastContainer store={ToastStore} />
         <br />
         <div className="container row">
           <form className="col-sm-3">
@@ -84,7 +86,7 @@ export const allBabies = (props) => {
                   <button id="submit-btn" type='submit' name='go' value='go'>Go</button>
                 </label>
               </form>
-            
+
             <form id="clearButton" onSubmit={props.handleClearSearch} >
               <button  type='submit' name='clear' value='clear'>Clear Search</button>
             </form>
@@ -112,6 +114,7 @@ export const allBabies = (props) => {
                     else {
                       props.createLineItem(evt, baby)
                     }
+                    ToastStore.success('Added to Cart')
                   }}>Add To Cart</button>
               </div>
                 <img className="product-page-img" src={ baby.imageUrl } />

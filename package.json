@@ -26,6 +26,7 @@
     "body-parser": "^1.16.1",
     "compression": "^1.7.1",
     "connect-session-sequelize": "^4.1.0",
+    "css-loader": "^0.28.8",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
     "history": "^4.6.3",
@@ -47,6 +48,7 @@
     "redux-thunk": "^2.2.0",
     "sequelize": "^4.3.1",
     "socket.io": "^2.0.3",
+    "style-loader": "^0.19.1",
     "url-loader": "^0.6.2"
   },
   "devDependencies": {

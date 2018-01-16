@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
-import Toast from './toast'
 
 /* Component */
 
@@ -16,20 +15,33 @@ export class Cart extends Component {
 
     render() {
         const orderId = this.props.order.id, userId = this.props.user.id
-    
+
         console.log('CART COMPONENT ORDER ID', orderId)
-    
+        console.log('length: ', this.props.cart.length)
         return (
-            <div>
-                {this.props.cart.map((item) => {
+            <div className="cart-container">
+
+                <h3 className="cart-title">Your Cart:</h3>
+
+                {
+                    (this.props.cart.length !== 0)
+                    ? <div>
+                    {this.props.cart.map((item) => {
                     return (
                         <ul key={item.id}>
                             <li >{item.baby.name}</li>
                             <li >Price: {item.price}</li>
                             <li >Quantity: {item.quantity}</li>
                         </ul>
-                    )
-                })}
+                    )})}
+                    </div>
+
+                    : <div>
+                        <h4>Your Cart is Empty</h4>
+                    </div>
+
+
+                }
             <button onClick={(evt) => this.props.checkout(evt, orderId, userId)}>Checkout</button>
             </div>
         )

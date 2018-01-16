@@ -19,7 +19,7 @@ main, img{
 .img-slide{
   width: 100%;
   padding-right: 10%;
-  padding-left: 10%; 
+  padding-left: 10%;
 }
 .product-page-img{
   max-height: 12em;
@@ -89,4 +89,30 @@ form div {
 
 .react-toasts-container {
   bottom: 0;
+}
+
+/* -------- REVIEW STYLE -------- */
+
+.reviews-title {
+  text-align: center;
+}
+
+.each-review {
+  text-align: left;
+  padding: 10px 300px;
+}
+
+.review-text {
+  padding: 10px 70px;
+}
+
+.each-new-review {
+  display: flex;
+  justify-content: center;
+}
+
+/* -------- CART STYLE -------- */
+
+.cart-container {
+  padding: 10px;
 }
