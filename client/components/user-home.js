@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import store, {me, fetchOrders} from '../store'
+import store, {me, fetchOrders, babiesThunk} from '../store'
 
 /**
  * COMPONENT
@@ -32,15 +32,14 @@ export class UserHome extends Component {
               track++;
               return (
                 <li key = {order.id}>
-                  {console.log(order)}
                   Ordered on {new Date(order.orderedAt).toDateString()} at {new Date(order.orderedAt).toTimeString().slice(0, 5)}
                   <ul>Products:
-                    {allBabies && order.lineItems.map(item => {
+                    {allBabies.length && order.lineItems.map(item => {
                       let thisBaby;
                       for(var i=0; i<allBabies.length; i++){
                         if (allBabies[i].id === item.babyId) thisBaby = allBabies[i]
                       }
-                      return (<li key={item.id}>{thisBaby.name} ${item.price}</li>)
+                      return (<li key={item.id}>{item.quantity} x {thisBaby.name} ${item.price}</li>)
                     })}
                     Total: ${order.total}
                   </ul>
@@ -57,7 +56,6 @@ export class UserHome extends Component {
           )}
         </ul>
         }
-        {console.log('order, orders',user.order, user.orders)}
         {(!user.orders || user.orders.length === 0) &&
           
         <div>
@@ -84,6 +82,7 @@ export class UserHome extends Component {
     )
   }
 }
+//A TEST!!!!!
 
 /**
  * CONTAINER
