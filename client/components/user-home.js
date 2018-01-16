@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import store, {me} from '../store'
+import store, {me, fetchOrders} from '../store'
 
 /**
  * COMPONENT
@@ -9,6 +9,7 @@ import store, {me} from '../store'
 export class UserHome extends Component {
   componentWillMount(){
     store.dispatch(me())
+    store.dispatch(fetchOrders)
   }
   componentDidMount(){
     store.dispatch(me())
@@ -16,20 +17,34 @@ export class UserHome extends Component {
   
   render () {
     const {user} = this.props
+    const {allOrders} = this.props
+    const {allBabies} = this.props
     let track = 0;
     return (
       <div>
         <h3>Welcome, {user.firstname}</h3>
         <br />
         <h5 id="orderTitle">Orders:</h5>
-        {user.orders && 
+        {allOrders.length && 
         <ul id="orderList">
-          {user.orders.map(order => {
+          {allOrders.map(order => {
             if (order.complete === true){
               track++;
               return (
                 <li key = {order.id}>
-                  Order #{order.id} ordered at {order.orderedAt}
+                  {console.log(order)}
+                  Ordered on {new Date(order.orderedAt).toDateString()} at {new Date(order.orderedAt).toTimeString().slice(0, 5)}
+                  <ul>Products:
+                    {allBabies && order.lineItems.map(item => {
+                      let thisBaby;
+                      for(var i=0; i<allBabies.length; i++){
+                        if (allBabies[i].id === item.babyId) thisBaby = allBabies[i]
+                      }
+                      return (<li key={item.id}>{thisBaby.name} ${item.price}</li>)
+                    })}
+                    Total: ${order.total}
+                  </ul>
+
                 </li>
               )
             }
@@ -76,7 +91,9 @@ export class UserHome extends Component {
 const mapState = (state) => {
   return {
     email: state.user.email,
-    user: state.user
+    user: state.user,
+    allOrders: state.allOrders,
+    allBabies: state.babies
   }
 }
 

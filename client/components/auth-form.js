@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
 import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from '../store'
+import {ToastContainer, ToastStore} from 'react-toasts'
 
 /**
  * COMPONENT
@@ -11,6 +12,8 @@ const AuthForm = (props) => {
 
   return (
     <div>
+    <ToastContainer store={ToastStore}/>
+
       <form onSubmit={(evt) => handleSubmit(evt, user.id)} name={name}>
       {props.name === 'signup' && 
         (<div>
@@ -35,7 +38,7 @@ const AuthForm = (props) => {
         <div>
           <button type="submit">{displayName}</button>
         </div>
-        {error && error.response && <div> {error.response.data} </div>}
+        {error && error.response && ToastStore.error('Incorrect credentials')}
       </form>
       <a href="/auth/google">{displayName} with Google</a>
     </div>
@@ -71,10 +74,10 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit (evt, userId) {
       evt.preventDefault()
+      evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-
       if (evt.target.firstname && evt.target.lastname) {
         const firstname = evt.target.firstname.value
         const lastname = evt.target.lastname.value
@@ -95,7 +98,6 @@ const mapDispatch = (dispatch) => {
           dispatch(getInitialCartThunk())
         })
       }
-      
     }
   }
 }
