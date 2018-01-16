@@ -5,7 +5,6 @@ import {withRouter, Link} from 'react-router-dom'
 import {logout} from '../store'
 import Home from './home'
 import AllBabies from './allBabies'
-import Toast from './toast'
 
 /**
  * COMPONENT
@@ -39,7 +38,6 @@ const Main = (props) => {
             </div>
         }
       </nav>
-      <Toast message={message} visible={true} />
       {children}
       <hr />
     </div>

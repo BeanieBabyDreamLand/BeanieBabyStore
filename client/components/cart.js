@@ -25,10 +25,16 @@ export class Cart extends Component {
         console.log('CART COMPONENT ORDER ID', orderId)
 
         return (
-            <div>
-                {this.props.cart.map((item) => {
+            <div className="cart-container">
+
+                <h3 className="cart-title">Your Cart:</h3>
+
+                {
+                    (this.props.cart.length !== 0)
+                    ? <div>
+                    {this.props.cart.map((item) => {
                     return (
-                        
+                    
                             <ul key={item.id}>
                                 <li >{item.baby.name}</li>
                                 <li >Price: {item.price}</li>
@@ -36,11 +42,18 @@ export class Cart extends Component {
                                 <li>Subtotal: {item.price * item.quantity}</li>
                                 <button className="btn btn-danger" onClick={(evt, lineItem, lineItemId) => this.props.deleteItem(evt, item, item.id)}>X</button>
                             </ul>
-                        
+                        )})} 
+                        </div>
+     
+                        : <div>
+                        <h4>Your Cart is Empty</h4>
+                          </div>
                     )
+                    
                 })}
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
+
             </div>
         )
     }

@@ -54,19 +54,19 @@ function mapStateProps(state){
     }
 
     render(){
-    
+
       const baby = this.props.babies
 
         return (
         <div>
-          <ToastContainer store={ToastStore}/>
+          <ToastContainer store={ToastStore} />
           { baby &&
           <div>
             <div className="one-baby-page-header">
               <h1>{baby.name}</h1>
               <p className="one-baby-page-header poem">{baby.poem}</p>
               <p>${baby.price}</p>
-              
+
               <br />
             <h5>This baby is {baby.category}</h5>
 
@@ -82,16 +82,16 @@ function mapStateProps(state){
                 if (updateCart){
                 this.props.updateCart(evt, lineItemId)
                 }
-                else { 
+                else {
                 this.props.createLineItem(evt)}
-                ToastStore.success('Added to Cart')
+                ToastStore.success('Added to Cart', 1000)
                 }}>Add To Cart</button>
                 <br />
                 <br />
                 <img src={baby.imageUrl} />
             </div>
             <br />
-            <Review props={this.props}/>
+            <Review props={this.props} />
           </div>
           }
         </div>
