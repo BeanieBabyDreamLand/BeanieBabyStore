@@ -61,3 +61,8 @@ form div {
 #submit-btn {
   margin-left: 1em
 }
+
+#beanie-baby {
+  max-height: 3em;
+  max-width: 4em;
+}

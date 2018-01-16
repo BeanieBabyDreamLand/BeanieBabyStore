@@ -91,9 +91,10 @@ export const allBabies = (props) => {
             </div>
           </div>
         </div>
+        <div className="row">
         {babies.length && babies.map(baby => {
           return(
-            <div key={baby.id}>
+            <div key={baby.id} className="col-sm beanie-baby">
               <div>
                 <Link to={`/products/${baby.id}`}  >{baby.name}</Link>
                 <div>
@@ -119,6 +120,7 @@ export const allBabies = (props) => {
             </div>
           )
         })}
+        </div>
       </div>
     )
 
