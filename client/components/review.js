@@ -61,7 +61,7 @@ export class review extends Component {
             <ToastContainer store={ToastStore} />
         <h3 className="reviews-title">Reviews and high praise for {thisBaby.name}</h3>
         <br />
-        {thisBaby && theseReviews.length &&
+        {thisBaby && theseReviews && theseReviews.length &&
             <div className="each-review">{theseReviews.map(thisReview => {
                 if ( thisReview.babyId === thisBaby.id ){
                 return (
