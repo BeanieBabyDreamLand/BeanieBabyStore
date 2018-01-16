@@ -37,7 +37,7 @@ export class Cart extends Component {
                     )
                 })}
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
-            <button onClick={(evt) => this.props.checkout(evt, orderId, userId)}>Checkout</button>
+            <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
             </div>
         )
     }
@@ -56,10 +56,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-      checkout (evt, orderId, userId){
-        console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
+      checkout (evt, orderId, userId, total){
+        console.log('TOTAL IN MAP DISPATCH', total)
         evt.preventDefault()
-        dispatch(completeOrderThunk(orderId))
+        dispatch(completeOrderThunk(orderId, total))
         .then(() => {
             dispatch(createNewIncompleteOrderThunk(userId))
         })

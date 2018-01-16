@@ -56,9 +56,9 @@ export const updateCartThunk = (Item, lineItemId) => {
   }
 }
 
-export const completeOrderThunk = (orderId) =>
+export const completeOrderThunk = (orderId, total) =>
   dispatch =>
-  axios.put(`/api/orders/${orderId}`, {complete: true}, {orderedAt: new Date()})
+  axios.put(`/api/orders/${orderId}`, {complete: true, orderedAt: new Date(), total: total})
   .then(completedOrder => {
     console.log('getting back completed order', completedOrder)
     dispatch(completeOrderAndEmptyCart([]))
