@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {babiesThunk, fetchOneBaby, addToCartThunk, updateCartThunk, getInitialCartThunk} from '../store'
 import { Review } from './index'
+import {ToastContainer, ToastStore} from 'react-toasts'
 
 function mapStateProps(state){
     return {
@@ -53,17 +54,19 @@ function mapStateProps(state){
     }
 
     render(){
+    
       const baby = this.props.babies
 
         return (
         <div>
+          <ToastContainer store={ToastStore}/>
           { baby &&
           <div>
             <div className="one-baby-page-header">
               <h1>{baby.name}</h1>
               <p className="one-baby-page-header poem">{baby.poem}</p>
               <p>${baby.price}</p>
-              <img src={baby.imageUrl} />
+              
               <br />
             <h5>This baby is {baby.category}</h5>
 
@@ -81,7 +84,11 @@ function mapStateProps(state){
                 }
                 else { 
                 this.props.createLineItem(evt)}
+                ToastStore.success('Added to Cart')
                 }}>Add To Cart</button>
+                <br />
+                <br />
+                <img src={baby.imageUrl} />
             </div>
             <br />
             <Review props={this.props}/>

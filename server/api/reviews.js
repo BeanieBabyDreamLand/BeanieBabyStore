@@ -22,6 +22,14 @@ router.param('reviewId', (req, res, next, reviewId) => {
     })
 })
 
+router.get('/', (req, res, next) => {
+  Review.findAll({
+    include: [{ model: Baby}, {model: User}]
+  })
+    .then(babies => res.json(babies))
+    .catch(next)
+})
+
 router.post('/', (req, res, next) => {
   Review.create({
     rating: req.body.rating,

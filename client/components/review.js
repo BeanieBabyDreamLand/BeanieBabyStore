@@ -7,7 +7,8 @@ function mapStateProps(state){
     return {
       babies: state.babies,
       user: state.user,
-      input: state.reviewInput
+      input: state.reviewInput,
+      reviews: state.reviews
     }
 }
 
@@ -16,6 +17,7 @@ function mapDispatchProps(dispatch){
         loadData (){
             dispatch(fetchAllUsers())
             dispatch(fetchOneBaby(this.req.params.id))
+            dispatch(fetchReviews())
         },
         handleReviewSubmit (evt) {
             evt.preventDefault()
@@ -23,7 +25,8 @@ function mapDispatchProps(dispatch){
             const text = evt.target.description.value
             const userId = store.getState().user.id
             const babyId = store.getState().babies.id
-            dispatch(postReview({rating, text, babyId, userId}))
+            dispatch(postReview({rating, text, babyId, userId})).
+            then(() => dispatch(fetchReviews()) )
         },
         handleChange (evt) {
             dispatch(writeReview(evt.target.value))
@@ -31,37 +34,37 @@ function mapDispatchProps(dispatch){
     }
 }
 export class review extends Component {
-
-    // componentWillMount () {
-    //     const fetchBabies = babiesThunk()
-    //     store.dispatch(fetchBabies)
-    // }
+    
+    componentWillMount () {
+        const fetchThisBaby = fetchOneBaby(this.props.match.params.id)
+        store.dispatch(fetchThisBaby)
+        store.dispatch(fetchReviews())
+    }
     // componentDidMount(){
-    //     const fetchBabies = babiesThunk()
-    //     store.dispatch(fetchBabies)
-    //   }
-
-    //   componentWillUnmount(){
-    //     const fetchBabies = babiesThunk()
-    //     store.dispatch(fetchBabies)
-    //   }
+    //     const fetchThisBaby = fetchOneBaby(this.props.match.params.id)
+    //     store.dispatch(fetchThisBaby)
+    //     store.dispatch(fetchReviews())
+    // }
 
     render () {
         let thisBaby = this.props.babies
         let handleChange = this.props.handleChange
         let input = this.props.input
+        let theseReviews = this.props.reviews
 
     return (
         <div>
         <h3>Reviews and high praise for {thisBaby.name}</h3>
-        {thisBaby && thisBaby.reviews &&
-            <div>{thisBaby.reviews.map(review => {
+        {console.log(theseReviews)}
+        {thisBaby && theseReviews.length &&
+            <div>{theseReviews.map(thisReview => {
+                if ( thisReview.babyId === thisBaby.id ){
                 return (
-                    <div key={review.id}>
-                       <h4>Stars: { review.rating } </h4>
-                       <p>TEXT: {review.text}</p>
+                    <div key={thisReview.id}>
+                       <h4>Stars: { thisReview.rating } </h4>
+                       <p>TEXT: {thisReview.text}</p>
                     </div>
-                )
+                )}
             })}</div>
         }
 
