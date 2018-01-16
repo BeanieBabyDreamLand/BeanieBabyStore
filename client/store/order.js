@@ -35,6 +35,8 @@ export const createNewIncompleteOrderThunk = () =>
   (dispatch, getState) =>
   axios.post('/api/orders', {userId: getState().user.id})
   .then(newIncompleteOrder => {
+    console.log('getState().user.id in .then', getState().user.id)
+
       return newIncompleteOrder.data
   })
   .then( incompleteOrder => dispatch(setCurrentOrder(incompleteOrder)))

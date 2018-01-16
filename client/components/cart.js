@@ -9,6 +9,9 @@ import Toast from './toast'
 
 const Cart = (props) => {
     const orderId = props.order.id
+
+    console.log('CART COMPONENT ORDER ID', orderId)
+
     return (
         <div>
             {props.cart.map((item) => {
@@ -37,6 +40,7 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
     return {
       checkout (evt, orderId){
+        console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
         evt.preventDefault()
         dispatch(getCurrentOrderThunk())
         dispatch(completeOrderThunk(orderId))
