@@ -9,7 +9,7 @@ function mapStateProps(state){
       babies: state.babies,
       user: state.user,
       input: state.reviewInput,
-      reviews: state.reviews,
+      reviews: state.review,
       clearInput: ''
     }
 }
@@ -52,6 +52,7 @@ export class review extends Component {
         let handleChange = this.props.handleChange
         let input = this.props.input
         let theseReviews = this.props.reviews
+
         console.log('theseReviews: ', theseReviews)
     return (
 
