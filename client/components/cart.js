@@ -3,11 +3,16 @@ import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
-import Toast from './toast'
+
+const calculateTotal = (arr) => {
+  let sum = 0
+  arr.forEach(item => {
+    sum += (item.price * item.quantity)
+  })
+  return sum
+}
 
 /* Component */
-
-
 export class Cart extends Component {
 
     componentWillMount(){
@@ -16,9 +21,9 @@ export class Cart extends Component {
 
     render() {
         const orderId = this.props.order.id, userId = this.props.user.id
-    
+
         console.log('CART COMPONENT ORDER ID', orderId)
-    
+
         return (
             <div>
                 {this.props.cart.map((item) => {
@@ -27,14 +32,17 @@ export class Cart extends Component {
                             <li >{item.baby.name}</li>
                             <li >Price: {item.price}</li>
                             <li >Quantity: {item.quantity}</li>
+                            <li>Subtotal: {item.price * item.quantity}</li>
                         </ul>
                     )
                 })}
+            <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => this.props.checkout(evt, orderId, userId)}>Checkout</button>
             </div>
         )
     }
 }
+
 
 /* Comtainer */
 

@@ -5,7 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import user from './user'
 import babies from './babies'
 import cart from './cart'
-import reviews from './review'
+import review from './review'
 import order from './order'
 import reviewInput from './reviewInput'
 
@@ -15,12 +15,9 @@ const reducer = combineReducers({
   babies,
   cart,
   order,
-  reviews,
+  review,
   reviewInput
 })
-
-console.log("PROCESS.ENV: ", process)
-
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})
