@@ -53,7 +53,7 @@ function mapDispatchProps(dispatch){
     },
     handleClearSearch(evt) {
       evt.preventDefault()
-      return dispatch(babiesThunk())
+       dispatch(babiesThunk())
     }
   }
 }
@@ -61,6 +61,8 @@ function mapDispatchProps(dispatch){
 export const allBabies = (props) => {
 
     const babies = props.babies;
+
+
     return (
         <div className="container">
         <ToastContainer store={ToastStore} />
