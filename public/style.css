@@ -27,11 +27,16 @@ nav{
   background-color: rgb(149,152,238);
   border-bottom-left-radius: .5em;
   border-bottom-right-radius: .5em;
+  justify-content: flex-end;
 }
 
 
 .navbar-light .navbar-brand{
   color: white;
+}
+
+.navbar-brand{
+  margin-right: auto;
 }
 
 nav a {
