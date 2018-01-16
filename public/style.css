@@ -4,14 +4,27 @@ body {
 }
 
 body, html{
-  cursor: url(http://i916.photobucket.com/albums/ad9/sugarycandy/cursors/pinksparkly.gif), pointer;
+  cursor: url(http://www.rw-designer.com/cursor-extern.php?id=105302), default;
   height: 100%;
 }
-
+.poem{
+  white-space:pre-wrap;
+}
+.one-baby-page-header{
+  text-align: center;
+}
 main, img{
+
+}
+.img-slide{
   width: 100%;
   padding-right: 10%;
-  padding-left: 10%
+  padding-left: 10%; 
+}
+.product-page-img{
+  max-height: 12em;
+  max-width: 20em;
+  margin: 0 auto;
 }
 
 a {
@@ -45,8 +58,9 @@ form div {
 }
 
 .slide {
-  height: 70vh;
-  width: 100vw;
+  margin: 0 auto;
+  height: 35em;
+  width: 60em;
   object-fit: fill;
 }
 
@@ -60,4 +74,10 @@ form div {
 
 #submit-btn {
   margin-left: 1em
+}
+
+#beanie-baby {
+  max-height: 3em;
+  max-width: 4em;
+  padding-top: 66.66%;
 }

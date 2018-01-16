@@ -69,6 +69,7 @@ export class review extends Component {
         {/* add review form */}
 
         <div>
+        <br />
         {
          (this.props.user.id)
             ? <div>

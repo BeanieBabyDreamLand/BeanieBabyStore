@@ -59,10 +59,12 @@ function mapStateProps(state){
         <div>
           { baby &&
           <div>
-            <h2>{baby.name}</h2>
-            <p>{baby.poem}</p>
-            <p>{baby.price}</p>
-            <img src={baby.imageUrl} />
+            <div className="one-baby-page-header">
+              <h1>{baby.name}</h1>
+              <p className="one-baby-page-header poem">{baby.poem}</p>
+              <p>${baby.price}</p>
+              <img src={baby.imageUrl} />
+              <br />
             <h5>This baby is {baby.category}</h5>
 
               <button type="submit" onClick={(evt) => {
@@ -80,7 +82,8 @@ function mapStateProps(state){
                 else { 
                 this.props.createLineItem(evt)}
                 }}>Add To Cart</button>
-
+            </div>
+            <br />
             <Review props={this.props}/>
           </div>
           }
