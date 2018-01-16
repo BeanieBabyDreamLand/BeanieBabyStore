@@ -2,11 +2,23 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
+<<<<<<< HEAD
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
 
 /* Component */
+=======
+import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk} from '../store'
+>>>>>>> 954818a8ef633a4a227cb84792014acbad1c96df
 
+const calculateTotal = (arr) => {
+  let sum = 0
+  arr.forEach(item => {
+    sum += (item.price * item.quantity)
+  })
+  return sum
+}
 
+/* Component */
 export class Cart extends Component {
 
     componentWillMount(){
@@ -28,25 +40,24 @@ export class Cart extends Component {
                     ? <div>
                     {this.props.cart.map((item) => {
                     return (
-                        <ul key={item.id}>
-                            <li >{item.baby.name}</li>
-                            <li >Price: {item.price}</li>
-                            <li >Quantity: {item.quantity}</li>
-                        </ul>
-                    )})}
-                    </div>
 
-                    : <div>
-                        <h4>Your Cart is Empty</h4>
-                    </div>
+                            <ul key={item.id}>
+                                <li >{item.baby.name}</li>
+                                <li >Price: {item.price}</li>
+                                <li >Quantity: {item.quantity}</li>
+                                <li>Subtotal: {item.price * item.quantity}</li>
+                                <button className="btn btn-danger" onClick={(evt, lineItem, lineItemId) => this.props.deleteItem(evt, item, item.id)}>X</button>
+                            </ul>
 
-
-                }
-            <button onClick={(evt) => this.props.checkout(evt, orderId, userId)}>Checkout</button>
+                    )
+                })}
+            <h3>Total: {calculateTotal(this.props.cart)}</h3>
+            <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
             </div>
         )
     }
 }
+
 
 /* Comtainer */
 
@@ -60,12 +71,18 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
     return {
-      checkout (evt, orderId, userId){
-        console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
+      checkout (evt, orderId, userId, total){
         evt.preventDefault()
-        dispatch(completeOrderThunk(orderId))
+        dispatch(completeOrderThunk(orderId, total))
         .then(() => {
             dispatch(createNewIncompleteOrderThunk(userId))
+        })
+      },
+      deleteItem (evt, lineItem, lineItemId){
+        evt.preventDefault()
+        dispatch(deleteLineItemThunk(lineItem, lineItemId))
+        .then(() => {
+            dispatch(getInitialCartThunk())
         })
       }
     }
