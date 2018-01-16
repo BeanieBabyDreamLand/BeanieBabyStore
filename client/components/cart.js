@@ -1,31 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
+import { Component } from 'React'
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from '../store'
 import Toast from './toast'
 
 /* Component */
 
 
-const Cart = (props) => {
-    const orderId = props.order.id
+export class Cart extends Component {
 
-    console.log('CART COMPONENT ORDER ID', orderId)
+    componentWillMount(){
+        store.dispatch(getCurrentOrderThunk)
+    }
 
-    return (
-        <div>
-            {props.cart.map((item) => {
-                return (
-                    <ul key={item.id}>
-                        <li >{item.baby.name}</li>
-                        <li >Price: {item.price}</li>
-                        <li >Quantity: {item.quantity}</li>
-                    </ul>
-                )
-            })}
-        <button onClick={(evt) => props.checkout(evt, orderId)}>Checkout</button>
-        </div>
-    )
+    render() {
+        const orderId = this.props.order.id
+    
+        console.log('CART COMPONENT ORDER ID', orderId)
+    
+        return (
+            <div>
+                {this.props.cart.map((item) => {
+                    return (
+                        <ul key={item.id}>
+                            <li >{item.baby.name}</li>
+                            <li >Price: {item.price}</li>
+                            <li >Quantity: {item.quantity}</li>
+                        </ul>
+                    )
+                })}
+            <button onClick={(evt) => this.props.checkout(evt, orderId)}>Checkout</button>
+            </div>
+        )
+    }
 }
 
 /* Comtainer */
@@ -42,9 +50,10 @@ const mapDispatch = (dispatch) => {
       checkout (evt, orderId){
         console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
         evt.preventDefault()
-        dispatch(getCurrentOrderThunk())
         dispatch(completeOrderThunk(orderId))
-        dispatch(createNewIncompleteOrderThunk())
+        .then(() => {
+            dispatch(createNewIncompleteOrderThunk())
+        })
       }
     }
 }

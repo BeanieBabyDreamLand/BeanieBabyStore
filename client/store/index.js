@@ -7,7 +7,6 @@ import babies from './babies'
 import cart from './cart'
 import review from './review'
 import order from './order'
-import checkout from './checkout'
 import reviewInput from './reviewInput'
 
 
@@ -16,10 +15,12 @@ const reducer = combineReducers({
   babies,
   cart,
   order,
-  checkout,
   review,
   reviewInput
 })
+
+console.log("PROCESS.ENV: ", process)
+
 const middleware = composeWithDevTools(applyMiddleware(
   thunkMiddleware,
   createLogger({collapsed: true})
@@ -32,6 +33,5 @@ export * from './babies'
 export * from './cart'
 export * from './review'
 export * from './order'
-export * from './checkout'
 export * from './reviewInput'
 
