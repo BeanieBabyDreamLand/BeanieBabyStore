@@ -28,9 +28,11 @@ const completeOrderAndEmptyCart = cart => ({type: COMPLETE_ORDER, cart})
  * THUNK CREATORS
  */
 export const getInitialCartThunk = () =>
-  dispatch =>
+dispatch =>
   axios.get('/api/cart')
-      .then(cart => dispatch(getCart(cart.data)))
+      .then(cart => {
+        return dispatch(getCart(cart.data))
+      })
       .catch(err => console.log(err))
 
 

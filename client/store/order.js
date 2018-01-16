@@ -21,25 +21,36 @@ const setCurrentOrder = (order) => ({type: SET_CURRENT_ORDER, order})
 /**
  * THUNK CREATORS
  */
-export const getCurrentOrderThunk = () =>
-  dispatch =>
+export const createNewIncompleteOrderThunk = (userId) =>
+  (dispatch, getState) =>
+  //console.log(getState().user.id)
+  axios.post('/api/orders', {userId: userId})
+  .then(newIncompleteOrder => {
+    console.log('newIncompleteOrder', newIncompleteOrder.data)
+
+      return newIncompleteOrder.data
+  })
+  .then( incompleteOrder => dispatch(setCurrentOrder(incompleteOrder)))
+  .catch(err => console.log(err))
+
+
+  export const getCurrentOrderThunk = () =>
+  (dispatch, getState) =>
   axios.get('/api/orders')
   .then(allOrders => {
     const incompleteOrder = allOrders.data.find(elem => !elem.complete)
     return incompleteOrder
   })
-  .then(incompleteOrder => dispatch(getCurrentOrder(incompleteOrder)))
-  .catch(err => console.log(err))
-
-export const createNewIncompleteOrderThunk = () =>
-  (dispatch, getState) =>
-  axios.post('/api/orders', {userId: getState().user.id})
-  .then(newIncompleteOrder => {
-    console.log('getState().user.id in .then', getState().user.id)
-
-      return newIncompleteOrder.data
+  .then((incompleteOrder) => {
+    if (incompleteOrder){
+      dispatch(getCurrentOrder(incompleteOrder))
+    }
+    else {
+      const userId = getState().user.id
+      console.log("USER ID IN FINAL ELSE IS: ", userId )
+      dispatch(createNewIncompleteOrderThunk(userId))
+    }
   })
-  .then( incompleteOrder => dispatch(setCurrentOrder(incompleteOrder)))
   .catch(err => console.log(err))
 
 /**

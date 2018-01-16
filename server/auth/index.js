@@ -38,9 +38,9 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  console.log(req.user)
+  const userId = req.session.passport.user
   User.findOne({
-    where: {id: req.user.id},
+    where: {id: userId},
     attributes: ['id', 'email', 'firstname', 'lastname', 'fullname'],
     include: [{model: Review}, {model: Order}]
   })
