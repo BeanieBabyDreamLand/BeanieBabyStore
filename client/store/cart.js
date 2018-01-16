@@ -8,6 +8,7 @@ const GET_CART = 'GET_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const UPDATE_CART = 'UPDATE_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const COMPLETE_ORDER = 'COMPLETE_ORDER'
 
 /**
  * INITIAL STATE
@@ -21,6 +22,7 @@ const getCart = cart => ({type: GET_CART, cart})
 const addToCart = item => ({type: ADD_TO_CART, item})
 const updateCart = item => ({type: UPDATE_CART, item})
 const removeFromCart = item => ({type: REMOVE_FROM_CART, item})
+const completeOrderAndEmptyCart = cart => ({type: COMPLETE_ORDER, cart})
 
 /**
  * THUNK CREATORS
@@ -41,16 +43,25 @@ export const addToCartThunk = (Item) =>
       })
     .catch(err => console.log(err))
 
+//---- updates a line item with the new quantitiy ---\\
 export const updateCartThunk = (Item, lineItemId) => {
   return (dispatch) => {
-    return axios.put(`api/lineItems/${lineItemId}`, {price: Item.price, quantity: 1, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
+    return axios.put(`/api/lineItems/${lineItemId}`, {price: Item.price, quantity: Item.quantity, userId: Item.userId, babyId: Item.babyId, orderId: Item.orderId})
     .then(updatedItem => {
-      console.log('data from the put: ', updatedItem)
-      return dispatch(updateCart(updatedItem))
+      return dispatch(updateCart(updatedItem.data))
     })
     .catch(err => console.log(err))
   }
 }
+
+export const completeOrderThunk = (orderId) =>
+  dispatch =>
+  axios.put(`/api/orders/${orderId}`, {complete: true})
+  .then(completedOrder => {
+    console.log('getting back completed order', completedOrder)
+    dispatch(completeOrderAndEmptyCart([]))
+  })
+  .catch(err => console.log(err))
 
 
 /**
@@ -73,6 +84,8 @@ export default function (state = defaultCart, action) {
       })
     case REMOVE_FROM_CART:
       return [...state.slice(0, state.indexOf(action.item)), ...state.slice(state.indexOf(action.item) + 1)]
+    case COMPLETE_ORDER:
+      return action.cart
     default:
       return state
   }

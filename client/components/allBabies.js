@@ -1,11 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
-import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults} from '../store'
+import store, {fetchBabies, babiesThunk, getBabyCategory, getSearchResults, addToCartThunk, updateCartThunk, getInitialCartThunk} from '../store'
 
 function mapStateProps(state){
   return {
-    babies: state.babies
+    babies: state.babies,
+    cart: state.cart,
+    user: state.user,
+    order: state.order
   }
 }
 function mapDispatchProps(dispatch){
@@ -15,17 +18,35 @@ function mapDispatchProps(dispatch){
     },
     handleChange (evt){
       evt.preventDefault()
-      console.log('CHANGE', evt)
       if (typeof (evt.target.value) === 'string') {
         return dispatch(getBabyCategory(evt.target.value))
       }
     },
-    handleSubmit (evt){
-      console.log('SUBMIT', evt)
+    updateCart (evt, lineItemId, baby){
+      evt.preventDefault()
+      const currentBaby = this.babies.find((elem) => {
+        return elem.id === baby.id
+      })
+      const currentQuant = this.cart.find(elem => {
+        return elem.babyId === +baby.id
+      }).quantity
+      dispatch(updateCartThunk({price: currentBaby.price, quantity: currentQuant + 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}, lineItemId))
+      .then(() => {
+        dispatch(getInitialCartThunk())
+      })
+    },
+    createLineItem (evt, baby){
+      evt.preventDefault()
+      const currentBaby = this.babies.find((elem) => {
+        return elem.id === baby.id
+      })
+      return dispatch(addToCartThunk({price: currentBaby.price, quantity: 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}))
+      .then(() => {
+        dispatch(getInitialCartThunk())
+      })
     },
     handleSubmitSearch (evt){
       evt.preventDefault()
-        console.log()
         const searchWord = evt.target.search.value
         return dispatch(getSearchResults(searchWord))
     },
@@ -76,9 +97,21 @@ export const allBabies = (props) => {
               <div>
                 <Link to={`/products/${baby.id}`}  >{baby.name}</Link>
                 <div>
-                <form onSubmit={props.handleSubmit}>
-                  <button type="submit" >Add To Cart</button>
-                </form>
+                  <button type="submit" onClick={(evt) => {
+                    let updateCart = false, lineItemId;
+                    props.cart.forEach(lineItem => {
+                      if (lineItem.babyId === baby.id){
+                        updateCart = true
+                        lineItemId = lineItem.id
+                      }
+                    })
+                    if (updateCart){
+                      props.updateCart(evt, lineItemId, baby)
+                    }
+                    else {
+                      props.createLineItem(evt, baby)
+                    }
+                  }}>Add To Cart</button>
               </div>
                 <img src={ baby.imageUrl } />
               </div>

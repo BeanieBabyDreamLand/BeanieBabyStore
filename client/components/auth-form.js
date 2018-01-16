@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {auth, cart, getInitialCartThunk} from '../store'
+import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from '../store'
 
 /**
  * COMPONENT
@@ -12,6 +12,18 @@ const AuthForm = (props) => {
   return (
     <div>
       <form onSubmit={handleSubmit} name={name}>
+      {props.name === 'signup' && 
+        (<div>
+          <div>
+          <label htmlFor="firstname"><small>First Name</small></label>
+          <input name="firstname" type="string" />
+        </div>
+        <div>
+          <label htmlFor="lastname"><small>Last Name</small></label>
+          <input name="lastname" type="string" />
+        </div>
+        </div>)
+        }
         <div>
           <label htmlFor="email"><small>Email</small></label>
           <input name="email" type="text" />
@@ -49,7 +61,8 @@ const mapSignup = (state) => {
   return {
     name: 'signup',
     displayName: 'Sign Up',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -60,10 +73,28 @@ const mapDispatch = (dispatch) => {
       const formName = evt.target.name
       const email = evt.target.email.value
       const password = evt.target.password.value
-      dispatch(auth(email, password, formName))
-      .then(() => {
-        dispatch(getInitialCartThunk())
-      })
+
+      if (evt.target.firstname && evt.target.lastname) {
+        const firstname = evt.target.firstname.value
+        const lastname = evt.target.lastname.value
+        dispatch(auth(  email, password, formName, firstname, lastname  ))
+        .then(() => {
+          dispatch(me()) 
+        })
+        .then(() => {
+         dispatch(createNewIncompleteOrderThunk())
+        })
+        .then(() => {
+         dispatch(getInitialCartThunk())
+        })
+      } 
+      if (!evt.target.firstname || !evt.target.lastname) {
+        dispatch(auth( email, password, formName  ))
+        .then(() => {
+          dispatch(getInitialCartThunk())
+        })
+      }
+      
     }
   }
 }

@@ -6,8 +6,6 @@ const db = require('../db')
 const app = require('../index')
 const { Baby } = require('../db/models')
 
-console.log(Baby)
-
 describe('Baby routes', () => {
     beforeEach(() => {
         return db.sync({ force: true })

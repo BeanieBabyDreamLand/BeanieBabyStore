@@ -34,7 +34,6 @@ export const fetchReviews = () =>
 
 
 export const postReview = (review) =>
-// console.log('review in thunk', review)
   dispatch =>
     axios.post('/api/reviews', review)
       .then(res => res.data)
