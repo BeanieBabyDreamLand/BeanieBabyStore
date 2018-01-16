@@ -61,9 +61,16 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
-      dispatch(babiesThunk())
-      dispatch(getInitialCartThunk())
-      dispatch(getCurrentOrderThunk())
+      .then(() => {
+        dispatch(babiesThunk())
+      })
+      .then(() => {
+        
+        dispatch(getCurrentOrderThunk())
+      })
+      .then(() => {
+        dispatch(getInitialCartThunk())
+      })
     }
   }
 }

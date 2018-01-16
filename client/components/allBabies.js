@@ -40,7 +40,7 @@ function mapDispatchProps(dispatch){
       const currentBaby = this.babies.find((elem) => {
         return elem.id === baby.id
       })
-      return dispatch(addToCartThunk({price: currentBaby.price, quantity: 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}))
+      dispatch(addToCartThunk({price: currentBaby.price, quantity: 1, userId: this.user.id, babyId: currentBaby.id, orderId: this.order.id}))
       .then(() => {
         dispatch(getInitialCartThunk())
       })

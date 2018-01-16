@@ -6,28 +6,25 @@ module.exports = router
 router.get('/', (req, res, next) => {
     if (req.session.passport.user){
         const userId = req.session.passport.user
-        Order.findAll({
-            where: { userId: userId}
-        })
-        .then(allUsersOrders => { 
-            const incompleteOrder = allUsersOrders.find(elem => {
-            //every element is an order for that user
-            return !elem.complete
-            })
-            return incompleteOrder
+        Order.find({
+            where: { userId: userId, complete: false}
         })
         .then(incompleteOrder => {
-            const orderId = incompleteOrder.id
-            return (
-                LineItem.findAll({
-                    where: {orderId: orderId},
-                    include: [{model: Baby}, {model: Order}]
-                })
-            )
+            if (incompleteOrder){
+                const orderId = incompleteOrder.id
+                return (
+                    LineItem.findAll({
+                        where: {orderId: orderId},
+                        include: [{model: Baby}, {model: Order}]
+                    })
+                )
+            }
         })
         .then(cartItems => {
-            req.session.cart = cartItems
-            res.send(req.session.cart)
+            if (cartItems){
+                req.session.cart = cartItems
+                res.send(req.session.cart)
+            }
         })
         .catch(next)
     }

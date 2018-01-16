@@ -15,7 +15,7 @@ export class Cart extends Component {
     }
 
     render() {
-        const orderId = this.props.order.id
+        const orderId = this.props.order.id, userId = this.props.user.id
     
         console.log('CART COMPONENT ORDER ID', orderId)
     
@@ -30,7 +30,7 @@ export class Cart extends Component {
                         </ul>
                     )
                 })}
-            <button onClick={(evt) => this.props.checkout(evt, orderId)}>Checkout</button>
+            <button onClick={(evt) => this.props.checkout(evt, orderId, userId)}>Checkout</button>
             </div>
         )
     }
@@ -41,18 +41,19 @@ export class Cart extends Component {
 const mapState = (state) => {
     return {
         cart: state.cart,
-        order: state.order
+        order: state.order,
+        user: state.user
     }
 }
 
 const mapDispatch = (dispatch) => {
     return {
-      checkout (evt, orderId){
+      checkout (evt, orderId, userId){
         console.log('CHECKOUT FUNCTION IN MAP DISPATCH', orderId)
         evt.preventDefault()
         dispatch(completeOrderThunk(orderId))
         .then(() => {
-            dispatch(createNewIncompleteOrderThunk())
+            dispatch(createNewIncompleteOrderThunk(userId))
         })
       }
     }

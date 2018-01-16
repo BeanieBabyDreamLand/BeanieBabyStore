@@ -7,11 +7,11 @@ import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from 
  * COMPONENT
  */
 const AuthForm = (props) => {
-  const {name, displayName, handleSubmit, error} = props
+  const {name, displayName, handleSubmit, error, user} = props
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={(evt) => handleSubmit(evt, user.id)} name={name}>
       {props.name === 'signup' && 
         (<div>
           <div>
@@ -53,7 +53,8 @@ const mapLogin = (state) => {
   return {
     name: 'login',
     displayName: 'Login',
-    error: state.user.error
+    error: state.user.error,
+    user: state.user
   }
 }
 
@@ -68,7 +69,7 @@ const mapSignup = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit (evt) {
+    handleSubmit (evt, userId) {
       evt.preventDefault()
       const formName = evt.target.name
       const email = evt.target.email.value
@@ -82,7 +83,7 @@ const mapDispatch = (dispatch) => {
           dispatch(me()) 
         })
         .then(() => {
-         dispatch(createNewIncompleteOrderThunk())
+         dispatch(createNewIncompleteOrderThunk(userId))
         })
         .then(() => {
          dispatch(getInitialCartThunk())

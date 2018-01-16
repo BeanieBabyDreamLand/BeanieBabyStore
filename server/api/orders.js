@@ -48,8 +48,9 @@ router.get('/:orderId', (req, res, next) => {
 info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
 */
 router.post('/', (req, res, next) => {
+  const userId = req.session.passport.user
   Order.findOrCreate({
-    where: { userId: req.body.userId,
+    where: { userId: userId,
             total: 0,
             complete: false}
   })
@@ -57,7 +58,6 @@ router.post('/', (req, res, next) => {
       if (arr[1]) { //true , means it was just created
         //now post a new order
         const newOrder = arr[0]
-        //newOrder.setUser(req.body.userId)//is this redundant?
         res.send(newOrder)
       }
       else { //false, already exists
