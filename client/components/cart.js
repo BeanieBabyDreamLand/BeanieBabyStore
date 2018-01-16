@@ -9,6 +9,7 @@ import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrde
 
 
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk} from '../store'
+import {ToastContainer, ToastStore} from 'react-toasts'
 
 const calculateTotal = (arr) => {
   let sum = 0
@@ -30,7 +31,9 @@ export class Cart extends Component {
 
         console.log('CART COMPONENT ORDER ID', orderId)
         return (
+            
             <div className="cart-container">
+            <ToastContainer store={ToastStore} />
 
                 <h3 className="cart-title">Your Cart:</h3>
 
@@ -45,7 +48,12 @@ export class Cart extends Component {
                                 <li >Price: {item.price}</li>
                                 <li >Quantity: {item.quantity}</li>
                                 <li>Subtotal: {item.price * item.quantity}</li>
-                                <button className="btn btn-danger" onClick={(evt, lineItem, lineItemId) => this.props.deleteItem(evt, item, item.id)}>X</button>
+                                <button className="btn btn-danger" 
+                                        onClick={(evt, lineItem, lineItemId) => {
+                                            this.props.deleteItem(evt, item, item.id)
+                                            ToastStore.success('Deleted From Cart')
+                                        }}>X
+                                </button>
                             </ul>
                         )})}
                         </div>
@@ -53,11 +61,18 @@ export class Cart extends Component {
                         : <div>
                         <h4>Your Cart is Empty</h4>
                           </div>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 62e7191871f1f8386ce2dd45fb54bf97574c8e16
                 }
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
-            <button onClick={(evt) => this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))}>Checkout</button>
+            <button onClick={(evt) => {
+                this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))
+                ToastStore.success('Successfully Checked Out')
+            }}>
+            Checkout</button>
 
             </div>
         )
