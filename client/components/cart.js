@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
 import { Component } from 'React'
-import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk} from '../store'
+import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk, fetchOrders} from '../store'
 import {ToastContainer, ToastStore} from 'react-toasts'
 
 const calculateTotal = (arr) => {
@@ -86,6 +86,11 @@ const mapDispatch = (dispatch) => {
         evt.preventDefault()
         dispatch(completeOrderThunk(orderId, total))
         .then(() => {
+            console.log("FETCH ORDERS")
+            dispatch(fetchOrders())
+        })
+        .then(() => {
+            console.log("CREATE NEW INCOMPLETE ORDER")
             dispatch(createNewIncompleteOrderThunk(userId))
         })
       },

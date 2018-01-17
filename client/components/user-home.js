@@ -9,7 +9,7 @@ import store, {me, fetchOrders, babiesThunk} from '../store'
 export class UserHome extends Component {
   componentWillMount(){
     store.dispatch(me())
-    store.dispatch(fetchOrders)
+    store.dispatch(fetchOrders())
   }
   componentDidMount(){
     store.dispatch(me())
@@ -46,14 +46,9 @@ export class UserHome extends Component {
 
                 </li>
               )
-            }
-            if (track === 0) {
-              return (
-                <p key = "noOrders">No past orders to show</p>
-              )
-            }
+            }})
           }
-          )}
+          {(track === 0) ? <p key = "noOrders">No past orders to show</p> : ''}
         </ul>
         }
         {(!user.orders || user.orders.length === 0) &&

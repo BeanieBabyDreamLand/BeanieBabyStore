@@ -10,6 +10,7 @@ router.get('/', (req, res, next) => {
             where: { userId: userId, complete: false}
         })
         .then(incompleteOrder => {
+            console.log("incompleteOrder: ",incompleteOrder)
             if (incompleteOrder){
                 const orderId = incompleteOrder.id
                 return (

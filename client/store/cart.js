@@ -31,6 +31,7 @@ export const getInitialCartThunk = () =>
 dispatch =>
   axios.get('/api/cart')
       .then(cart => {
+        console.log("CART: ",cart)
         return dispatch(getCart(cart.data))
       })
       .catch(err => console.log(err))

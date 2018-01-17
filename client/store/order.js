@@ -39,6 +39,7 @@ export const createNewIncompleteOrderThunk = (userId) =>
   axios.get('/api/orders')
   .then(allOrders => {
     const incompleteOrder = allOrders.data.find(elem => !elem.complete)
+    console.log("incompleteOrder: ", incompleteOrder)
     return incompleteOrder
   })
   .then((incompleteOrder) => {

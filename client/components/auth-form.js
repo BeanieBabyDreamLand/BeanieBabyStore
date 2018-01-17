@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import PropTypes from 'prop-types'
-import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk} from '../store'
+import {me, auth, cart,createNewIncompleteOrderThunk, getInitialCartThunk, getCurrentOrderThunk} from '../store'
 import {ToastContainer, ToastStore} from 'react-toasts'
 
 /**
@@ -83,17 +83,20 @@ const mapDispatch = (dispatch) => {
         const lastname = evt.target.lastname.value
         dispatch(auth(  email, password, formName, firstname, lastname  ))
         .then(() => {
-          dispatch(me()) 
+          dispatch(me())
         })
         .then(() => {
-         dispatch(createNewIncompleteOrderThunk(userId))
+         dispatch(getCurrentOrderThunk())
         })
         .then(() => {
          dispatch(getInitialCartThunk())
         })
-      } 
+      }
       if (!evt.target.firstname || !evt.target.lastname) {
         dispatch(auth( email, password, formName  ))
+        .then(() => {
+          dispatch(getCurrentOrderThunk())
+         })
         .then(() => {
           dispatch(getInitialCartThunk())
         })

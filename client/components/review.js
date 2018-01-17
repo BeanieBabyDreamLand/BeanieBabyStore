@@ -18,8 +18,12 @@ function mapDispatchProps(dispatch){
     return {
         loadData (){
             dispatch(fetchAllUsers())
-            dispatch(fetchOneBaby(this.req.params.id))
-            dispatch(fetchReviews())
+            .then(() => {
+                dispatch(fetchOneBaby(this.req.params.id))
+            })
+            .then(() => {
+                dispatch(fetchReviews())
+            })
         },
         handleReviewSubmit (evt) {
             evt.preventDefault()
