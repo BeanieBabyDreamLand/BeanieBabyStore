@@ -57,7 +57,6 @@ export class review extends Component {
         let input = this.props.input
         let theseReviews = this.props.reviews
 
-        console.log('theseReviews: ', theseReviews)
     return (
 
         <div className="review-container">

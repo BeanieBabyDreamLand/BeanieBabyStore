@@ -26,9 +26,8 @@ router.param('orderId', (req, res, next, orderId) => {
 //     .catch(next)
 // })
 
-router.get('/', (req,res,next) => {
+router.get('/', (req, res, next) => {
     const userId = req.session.passport.user
-    console.log('userId: ', userId)
     Order.findAll({
         where: { userId: userId},
         include: [{ model: User,
@@ -71,7 +70,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:orderId', (req, res, next) => {
-  console.log('REQ.BODY is ', req.body)
   Order.update(
     req.body,
     {

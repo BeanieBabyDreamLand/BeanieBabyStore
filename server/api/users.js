@@ -50,7 +50,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:userId', (req, res, next) => {
-  console.log(req.user)
   User.update(
     req.body,
     {

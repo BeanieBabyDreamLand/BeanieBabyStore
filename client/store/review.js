@@ -37,7 +37,6 @@ export const postReview = (review) =>
     axios.post('/api/reviews', review)
       .then(res => res.data)
       .then(newReview => {
-        console.log(newReview)
         return dispatch(addReview(newReview))
       })
       .catch(err => console.log(err))

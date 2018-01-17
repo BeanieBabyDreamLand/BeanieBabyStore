@@ -54,21 +54,8 @@ router.put('/:lineItemId', (req, res, next) => {
   return LineItem.findById(req.params.lineItemId)
   .then(foundLineItem => foundLineItem.update(req.body))
   .then(updatedLineItem => {
-    console.log('updatedLineItem: ', updatedLineItem)
     res.status(201).send(updatedLineItem)
   })
-  // LineItem.update(
-  //   req.body,
-  //   {
-  //     where:
-  //       { id: req.lineItem.id },
-  //     returning: true,
-  //     plain: true
-  //   }
-  // )
-  // .then((lineItemArr) => {
-  //   return res.status(201).send(lineItemArr[0])
-  // })
   .catch(next)
 })
 
