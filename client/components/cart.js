@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { Component }  from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Link } from 'react-router-dom'
-import { Component } from 'React'
 import store, {completeOrderThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk, getInitialCartThunk, deleteLineItemThunk, fetchOrders} from '../store'
 import {ToastContainer, ToastStore} from 'react-toasts'
 
@@ -24,7 +23,7 @@ export class Cart extends Component {
         const orderId = this.props.order.id, userId = this.props.user.id
 
         return (
-            
+
             <div className="cart-container">
             <ToastContainer store={ToastStore} />
 
@@ -35,22 +34,22 @@ export class Cart extends Component {
                     ? <div>
                     {this.props.cart.map((item) => {
                     return (
-                    
+
                             <ul key={item.id}>
                                 <li >{item.baby.name}</li>
                                 <li >Price: {item.price}</li>
                                 <li >Quantity: {item.quantity}</li>
                                 <li>Subtotal: {item.price * item.quantity}</li>
-                                <button className="btn btn-danger" 
+                                <button className="btn btn-danger"
                                         onClick={(evt, lineItem, lineItemId) => {
                                             this.props.deleteItem(evt, item, item.id)
                                             ToastStore.success('Deleted From Cart')
                                         }}>X
                                 </button>
                             </ul>
-                        )})} 
+                        )})}
                         </div>
-     
+
                         : <div>
                         <h4>Your Cart is Empty</h4>
                           </div>
