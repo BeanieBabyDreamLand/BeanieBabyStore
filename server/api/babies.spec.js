@@ -32,15 +32,6 @@ describe('Baby routes', () => {
                     imageUrl: 'https://images-na.ssl-images-amazon.com/images/I/71E25QZTEVL.gif',
                     category: 'common'
             })
-            // ,
-            //     Baby.create({
-            //         name: 'Mystic',
-            //         poem: 'Once upon a time in a land far away, A baby unicorn was born one day in May, Keep Mystic with you she\'s a prize, You\'ll see the magic in her blue eyes.',
-            //         price: '5000.00',
-            //         inventory_qty: '1',
-            //         imageUrl: 'http://www.tycollector.com/beanies/bb-images/bernie.jpg',
-            //         category: 'rare'
-            // })
         })
 
         it('GET /api/babies', () => {
@@ -115,8 +106,7 @@ describe('Baby routes', () => {
                     expect(res.body.category).to.equal('rare');
                     expect(res.body.inventory_qty).to.equal(500)
                 })
-            //we need to create a 201 status created for our posts
-        }) // end describe('/api/babies')
+        }) 
 
         it('DELETE /api/babies', () => {
             return request(app)

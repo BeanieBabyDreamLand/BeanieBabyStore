@@ -4,7 +4,7 @@ import {Route, Switch, Router} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, Signup, UserHome, AllBabies, OneBaby, Home, Cart} from './components'
-import {me, babiesThunk, getInitialCartThunk, getCurrentOrderThunk, createNewIncompleteOrderThunk} from './store'
+import {me, babiesThunk, getInitialCartThunk, getCurrentOrderThunk} from './store'
 
 /**
  * COMPONENT

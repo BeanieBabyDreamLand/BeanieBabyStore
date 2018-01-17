@@ -23,8 +23,6 @@ export class Cart extends Component {
     render() {
         const orderId = this.props.order.id, userId = this.props.user.id
 
-        console.log('CART COMPONENT ORDER ID', orderId)
-
         return (
             
             <div className="cart-container">
@@ -86,11 +84,9 @@ const mapDispatch = (dispatch) => {
         evt.preventDefault()
         dispatch(completeOrderThunk(orderId, total))
         .then(() => {
-            console.log("FETCH ORDERS")
             dispatch(fetchOrders())
         })
         .then(() => {
-            console.log("CREATE NEW INCOMPLETE ORDER")
             dispatch(createNewIncompleteOrderThunk(userId))
         })
       },

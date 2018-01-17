@@ -15,20 +15,9 @@ router.param('orderId', (req, res, next, orderId) => {
     })
 })
 
-// router.get('/', (req, res, next) => {
-//   Order.findAll({
-//       include: [{model: User,
-//                   attributes: ['firstname', 'lastname', 'fullname', 'email']},
-//                 {model: LineItem}
-//               ]
-//   })
-//     .then(orders => res.json(orders))
-//     .catch(next)
-// })
 
-router.get('/', (req,res,next) => {
+router.get('/', (req, res, next) => {
     const userId = req.session.passport.user
-    console.log('userId: ', userId)
     Order.findAll({
         where: { userId: userId},
         include: [{ model: User,
@@ -46,10 +35,7 @@ router.get('/:orderId', (req, res, next) => {
   res.send(req.order)
 })
 
-//for anytime you want to start or add to a cart (which is just an order)
-/*
-info we're getting: user_id, baby_id, lineitem_id, price, quantitiy
-*/
+
 router.post('/', (req, res, next) => {
   const userId = req.session.passport.user
   Order.findOrCreate({
@@ -71,7 +57,6 @@ router.post('/', (req, res, next) => {
 })
 
 router.put('/:orderId', (req, res, next) => {
-  console.log('REQ.BODY is ', req.body)
   Order.update(
     req.body,
     {

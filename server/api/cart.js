@@ -10,7 +10,6 @@ router.get('/', (req, res, next) => {
             where: { userId: userId, complete: false}
         })
         .then(incompleteOrder => {
-            console.log("incompleteOrder: ",incompleteOrder)
             if (incompleteOrder){
                 const orderId = incompleteOrder.id
                 return (
@@ -35,10 +34,6 @@ router.get('/', (req, res, next) => {
     }
 })
 
-//The Put Post and delete routes need to run AFTER the orders/lineitems put/post/delete
-//routes run otherwise the cart get request will bring back all lineitems which are part
-//of an incomplete order. 
-
 // ----- update cart ---- \\
 router.put('/:lineItemId', (req, res, next) => {
     LineItem.findOne({where: {id: req.params.lineItemId}})
@@ -60,22 +55,14 @@ router.put('/:lineItemId', (req, res, next) => {
 
 // ---- remove from cart ---- \\
 router.delete('/:lineItemId', (req, res, next) => {
-    let cart = req.session.cart, newCart
     LineItem.destroy({where: {id: req.params.lineItemId}})
-    // .then(itemToRemove => {
-    //    newCart = cart.filter(elem => {
-    //        return elem.id !== itemToRemove.id
-    //    })
-    //    cart = newCart
-    //    res.send(cart)
-    // })
     .then(() => {
-        res.send("Beanie sent back to the farm :)")
+        res.send('Beanie sent back to the farm :)')
     })
     .catch(next)
 })
 
-router.delete('/',(req,res,next) => {
+router.delete('/',(req, res, next) => {
     req.session.cart = []
     res.send(req.session.cart)
     .catch(next)

@@ -31,7 +31,6 @@ export const getInitialCartThunk = () =>
 dispatch =>
   axios.get('/api/cart')
       .then(cart => {
-        console.log("CART: ",cart)
         return dispatch(getCart(cart.data))
       })
       .catch(err => console.log(err))
@@ -61,7 +60,6 @@ export const completeOrderThunk = (orderId, total) =>
   dispatch =>
   axios.put(`/api/orders/${orderId}`, {complete: true, orderedAt: new Date(), total: total})
   .then(completedOrder => {
-    console.log('getting back completed order', completedOrder)
     dispatch(completeOrderAndEmptyCart([]))
   })
   .catch(err => console.log(err))
