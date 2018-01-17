@@ -22,11 +22,11 @@ export class Cart extends Component {
 
     render() {
         const orderId = this.props.order.id, userId = this.props.user.id
-
+        const editItem = this.props.editItem
         console.log('CART COMPONENT ORDER ID', orderId)
 
         return (
-            
+
             <div className="cart-container">
             <ToastContainer store={ToastStore} />
 
@@ -37,26 +37,54 @@ export class Cart extends Component {
                     ? <div>
                     {this.props.cart.map((item) => {
                     return (
-                    
+
                             <ul key={item.id}>
                                 <li >{item.baby.name}</li>
                                 <li >Price: {item.price}</li>
-                                <li >Quantity: {item.quantity}</li>
+                                <li >Quantity:
+                                    <form>
+                                    <select className="quantity-form"
+                                    onChange={(evt) => editItem()}>
+                                        <option selected="selected">{item.quantity}</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                    </select>
+                                    </form>
+                                </li>
                                 <li>Subtotal: {item.price * item.quantity}</li>
-                                <button className="btn btn-danger" 
+                                <button className="btn btn-danger"
                                         onClick={(evt, lineItem, lineItemId) => {
                                             this.props.deleteItem(evt, item, item.id)
                                             ToastStore.success('Deleted From Cart')
                                         }}>X
                                 </button>
+
+                                   {/* edit button */}
+                                <button className="btn btn-info"
+                                onClick={(evt) => editItem(evt)}
+                                    // (evt) => console.log('in onclick edit', item, evt.options[evt.selectedIndex].value)}
+                                >Edit this line</button>
+
+
+
                             </ul>
-                        )})} 
+                        )})}
                         </div>
-     
+
                         : <div>
-                        <h4>Your Cart is Empty</h4>
+                            <h4>Your Cart is Empty</h4>
                           </div>
                 }
+
+
+
+
+
+
+
             <h3>Total: {calculateTotal(this.props.cart)}</h3>
             <button onClick={(evt) => {
                 this.props.checkout(evt, orderId, userId, calculateTotal(this.props.cart))
@@ -95,6 +123,10 @@ const mapDispatch = (dispatch) => {
         .then(() => {
             dispatch(getInitialCartThunk())
         })
+      },
+      editItem (evt) {
+          console.log('evt: ', evt)
+        //   console.log('3', evt.options[evt.selectedIndex].value)
       }
     }
 }

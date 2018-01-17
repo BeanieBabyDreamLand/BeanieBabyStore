@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import store, {me, fetchOrders, babiesThunk} from '../store'
+import store, {me, fetchOrders, getBabies, babiesThunk} from '../store'
 
 /**
  * COMPONENT
@@ -14,7 +14,7 @@ export class UserHome extends Component {
   componentDidMount(){
     store.dispatch(me())
   }
-  
+
   render () {
     const {user} = this.props
     const {allOrders} = this.props
@@ -25,7 +25,7 @@ export class UserHome extends Component {
         <h3>Welcome, {user.firstname}</h3>
         <br />
         <h5 id="orderTitle">Orders:</h5>
-        {allOrders.length && 
+        {allOrders.length &&
         <ul id="orderList">
           {allOrders.map(order => {
             if (order.complete === true){
@@ -57,18 +57,18 @@ export class UserHome extends Component {
         </ul>
         }
         {(!user.orders || user.orders.length === 0) &&
-          
+
         <div>
           <p>No past orders to show</p>
         </div>
         }
         <br />
         <h5>Reviews:</h5>
-        {user.reviews && 
+        {user.reviews &&
           <ul id="reviewList">
-            {user.reviews.map(review => 
+            {user.reviews.map(review =>
               (<li key = {review.id} className="foo">
-                ({review.rating}) stars for baby # {review.babyId}: {review.text}
+                {review.rating} stars for baby # {review.babyId}: {review.text}
               </li>)
             )}
           </ul>
