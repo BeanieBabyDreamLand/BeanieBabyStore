@@ -65,7 +65,6 @@ const mapDispatch = (dispatch) => {
         dispatch(babiesThunk())
       })
       .then(() => {
-        
         dispatch(getCurrentOrderThunk())
       })
       .then(() => {

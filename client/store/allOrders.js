@@ -6,12 +6,12 @@ const defaultOrders = []
 
 const getAllOrders = (orders) => ({type: GET_ALL_ORDERS, orders})
 
-export const fetchOrders = (dispatch) => {
+export const fetchOrders = () =>
+    dispatch =>
     axios.get('/api/orders')
-    .then(res => 
+    .then(res =>
         dispatch(getAllOrders(res.data || defaultOrders)))
     .catch(err => console.log(err))
-}
 
 export default function (state = defaultOrders, action) {
     switch (action.type) {
