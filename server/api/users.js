@@ -28,7 +28,6 @@ router.get('/:userId', (req, res, next) => {
   res.send(req.user)
 })
 
-//create a new user (signup page) assumes it comes with req.body.email, req.body.password, req.body.firstname, req.body.lastname
 router.post('/', (req, res, next) => {
   User.findOrCreate({
     where: { email: req.body.email, 

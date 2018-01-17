@@ -72,7 +72,6 @@ function mapStateProps(state){
 
               <button type="submit" onClick={(evt) => {
                 let updateCart = false, lineItemId
-        //---Test if this baby is already in the cart ---\\
                 this.props.cart.forEach(lineItem => {
                   if (lineItem.babyId === baby.id){
                     updateCart = true
