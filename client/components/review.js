@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {withRouter, Link} from 'react-router-dom'
 import store, {fetchBabies, babiesThunk, fetchOneBaby, getBabyCategory, getSearchResults, fetchAllUsers, fetchReviews, postReview, writeReview} from '../store'
 import {ToastContainer, ToastStore} from 'react-toasts'
+import ReactStars from 'react-stars'
 
 function mapStateProps(state){
     return {
@@ -70,7 +71,15 @@ export class review extends Component {
                 if ( thisReview.babyId === thisBaby.id ){
                 return (
                     <div key={thisReview.id}>
-                       <h5>{thisReview.user.fullname} Gave {thisBaby.name} { thisReview.rating } Stars on {new Date(thisReview.updatedAt).toDateString()}</h5>
+                       <h5>{thisReview.user.fullname}</h5>
+                       <ReactStars
+                            count={5}
+                            value={thisReview.rating}
+                            size={24}
+                            color2={'#ffd700'}
+                            edit={false} />
+                            {/*Gave {thisBaby.name} { thisReview.rating } Stars on*/}
+                        <h6>{new Date(thisReview.updatedAt).toDateString()}</h6>
                        <p className="review-text"><strong>{thisReview.user.fullname.split(' ')[0]} says: </strong>{thisReview.text}</p>
                     </div>
                 )}
